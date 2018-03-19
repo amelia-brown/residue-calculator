@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sharity</title>
+
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+  <% if (IS_PRODUCTION) { %>
+    <link rel='stylesheet' href='/lib/bundle.css'></link>
+  <% } %>
+
+</head>
+<body>
+  <div id="mount"><%- content %></div>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <% if (IS_PRODUCTION) { %>
+    <script src="/lib/vendor.js"></script>
+    <script src="/lib/client.js"></script>
+  <% } else { %>
+    <script src="/lib/main.js"></script>
+  <% } %>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "name": "residue-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:client": "webpack --config tools/webpack.client",
+    "build:server": "webpack --config tools/webpack.server",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amelia-brown/residue-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amelia-brown/residue-calculator/issues"
+  },
+  "homepage": "https://github.com/amelia-brown/residue-calculator#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-react-hot-loader": "^3.0.0-beta.6",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-style-loader": "^4.0.0",
+    "json-loader": "^0.5.7",
+    "postcss-loader": "^2.1.1",
+    "react": "^16.2.0",
+    "react-hot-loader": "^4.0.0",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "redux-immutable": "^4.0.0",
+    "standard-loader": "^6.0.1",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
+    "webpack-hot-middleware": "^2.21.2",
+    "webpack-merge": "^4.1.2",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-webpack-assets": "^0.1.0",
+    "immutable": "^3.8.2",
+    "nodemon": "^1.17.2",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0",
+    "webpack-dev-middleware": "^3.0.1"
+  }
+}
