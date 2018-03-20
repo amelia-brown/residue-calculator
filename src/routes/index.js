@@ -11,6 +11,7 @@ export default renderRoutes([
       {
         component: Home,
         key: 'home',
+        exact: true,
         path: '/'
       }
     ]

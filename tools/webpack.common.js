@@ -66,6 +66,7 @@ switch (CONSTANTS.IS_DEVELOPMENT) {
     config = merge(
       config,
       {
+        mode: 'development',
         devtool: 'cheap-module-eval-sourcemap'
       }
     )
@@ -76,6 +77,7 @@ switch (CONSTANTS.IS_DEVELOPMENT) {
       config,
       {
         devtool: 'hidden-source-map',
+        mode: 'production',
         plugins: [
           webpack.optimize.UglifyJSPlugin({
             compress: {
