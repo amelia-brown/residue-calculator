@@ -3,6 +3,8 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import routes from 'routes'
 
+import './styles'
+
 const Mount = ({history, store}) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>

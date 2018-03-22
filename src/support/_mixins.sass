@@ -1,0 +1,9 @@
+@import 'support/constants'
+
+@mixin respondMedium
+  @media screen and (min-width: $breakpoint-medium)
+    @content
+
+@mixin respondLarge
+  @media screen and (min-width: $breakpoint-large)
+    @content

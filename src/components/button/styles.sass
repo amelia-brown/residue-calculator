@@ -1,0 +1,30 @@
+@import 'support/colors'
+
+.base
+  background-color: #999
+  border: 0
+  border-radius: 20px
+  padding: 0 8px
+  outline: none
+  &:disabled
+    background: #ccc
+    pointer-events: all
+
+.inner
+  align-items: center
+  display: flex
+  height: 40px
+  justify-content: center
+  padding: 0 8px
+  width: 128px
+
+.label
+  color: #fff
+
+.primary
+  background-color: $accent
+  .label
+    color: #fff
+  &:disabled
+    background: #ccc
+    pointer-events: all
