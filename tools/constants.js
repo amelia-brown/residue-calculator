@@ -18,7 +18,9 @@ const GLOBALS = [
   '__IS_DEVELOPMENT__',
   '__IS_CLIENT__',
   '__IS_SERVER__',
-  'fetch'
+  'fetch',
+  'Image',
+  'ImageData'
 ]
 
 module.exports = {
