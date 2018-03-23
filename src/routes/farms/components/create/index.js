@@ -6,22 +6,37 @@ import FormField from 'components/form-field'
 
 import styles from './styles'
 
+let validate = (value) => {
+  if (!value || !value.trim()) {
+    return 'This field is required'
+  }
+  return false
+}
+
 export default class Create extends Component {
   state = {
-    name: '',
-    address: '',
-    city: ''
+    values: {
+      name: '',
+      address: '',
+      city: ''
+    }
   }
 
-  handleChange (e) {
-    return (type) => {
-      console.log('type', type)
+  handleChange (type) {
+    return (e) => {
+      this.setState({
+        values: {
+          ...this.state.values,
+          [type]: e.target.value
+        }
+      })
     }
   }
 
   render () {
     return (
       <Content>
+
         <Title>
           New Farm
         </Title>
@@ -29,17 +44,21 @@ export default class Create extends Component {
         <form className={styles.section}>
           <FormField
             onChange={::this.handleChange('name')}
-            value={this.state.name}
-            label={'name'} />
+            value={this.state.values.name}
+            validate={validate}
+            label={'Name'} />
           <FormField
             onChange={::this.handleChange('address')}
-            value={this.state.address}
-            label={'address'} />
+            value={this.state.values.address}
+            validate={validate}
+            label={'Address'} />
           <FormField
             onChange={::this.handleChange('city')}
-            value={this.state.city}
-            label={'city'} />
+            value={this.state.values.city}
+            validate={validate}
+            label={'City'} />
         </form>
+
       </Content>
     )
   }
