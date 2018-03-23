@@ -13,10 +13,18 @@ const Card = ({
 }) => (
   <div className={`${styles.base} ${className}`}>
     <div className={styles.text}>
-      <Copy type='title'>{title}</Copy>
+      <Copy
+        className={styles.title}
+        type='title'>
+        {title}
+      </Copy>
       {
         subtitle &&
-          <Copy type='subtitle'>{subtitle}</Copy>
+          <Copy
+            className={styles.subtitle}
+            type='subtitle'>
+            {subtitle}
+          </Copy>
       }
     </div>
     {

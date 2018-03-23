@@ -7,8 +7,8 @@ export default ({farms}) => {
   return (
     <div className={styles.list}>
       {
-        farms.map(farm =>
-          <FarmItem farm={farm} />)
+        Object.keys(farms).map(i =>
+          <FarmItem farm={farms[i]} />)
       }
     </div>
   )

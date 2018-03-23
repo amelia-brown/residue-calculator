@@ -3,7 +3,7 @@ import React from 'react'
 import styles from './styles.sass'
 
 const ICONS = {
-  go: 'chevron right'
+  go: 'chevron_right'
 }
 
 const RoundButton = ({
@@ -19,7 +19,7 @@ const RoundButton = ({
     `}>
     <i
       className={`
-        material-icon
+        material-icons
         ${dark ? styles['icon-dark'] : styles.icon}
       `}>
       {ICONS[type]}
