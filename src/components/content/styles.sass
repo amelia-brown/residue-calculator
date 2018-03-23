@@ -1,0 +1,17 @@
+@import 'support/constants'
+@import 'support/mixins'
+@import 'support/colors'
+
+.base
+  display: flex
+  flex-direction: column
+  margin: 0 auto
+  padding: 0 16px
+  width: 100%
+  max-width: $width-small
+
+  @include respondMedium
+    max-width: $width-medium
+
+  @include respondLarge
+    max-width: $width-large

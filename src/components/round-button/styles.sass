@@ -1,0 +1,24 @@
+@import 'support/colors'
+
+.base
+  height: 48px
+  width: 48px
+  background: $accent
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+
+.i
+  font-size: 40px
+
+.icon
+  composes: i
+  color: $accent-dark
+
+.dark
+  composes: i
+  background: $accent-dark
+
+.icon-dark
+  color: $accent
