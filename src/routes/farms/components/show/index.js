@@ -3,7 +3,7 @@ import React from 'react'
 import Content from 'components/content'
 import Title from 'components/title'
 
-import Graph from './components/graph'
+import Info from './components/info'
 
 import data from '../../data'
 
@@ -14,7 +14,7 @@ export default ({match}) => {
       <Title>
         {farm.name}
       </Title>
-      <Graph />
+      <Info farm={farm} />
     </Content>
   )
 }

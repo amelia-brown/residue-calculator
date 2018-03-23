@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Card from 'components/card'
+import ListItem from 'components/list-item'
 
 import styles from './styles'
 
@@ -10,7 +10,7 @@ export default ({farm}) => {
     <Link
       className={styles.link}
       to={`farms/${farm.id}`}>
-      <Card
+      <ListItem
         title={farm.name}
         subtitle={farm.address}
         action='go' />
