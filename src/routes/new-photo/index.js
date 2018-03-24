@@ -30,6 +30,8 @@ export default class Home extends Component {
     width: 0
   }
 
+  boundMouseDown = ::this.handleMouseDown
+
   componentDidMount () {
     this.setDimensions({
       width: window.innerWidth,
@@ -83,12 +85,12 @@ export default class Home extends Component {
 
     image.src = img
 
-    window.addEventListener('mousedown', this.handleMouseDown)
+    window.addEventListener('mousedown', this.boundMouseDown)
   }
 
   componentWillUnmount () {
     console.log('xxx')
-    window.removeEventListener('mousedown', this.handleMouseDown)
+    window.removeEventListener('mousedown', this.boundMouseDown)
   }
 
   setDimensions () {

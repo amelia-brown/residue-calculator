@@ -20,7 +20,8 @@ const GLOBALS = [
   '__IS_SERVER__',
   'fetch',
   'Image',
-  'ImageData'
+  'ImageData',
+  'localStorage'
 ]
 
 module.exports = {

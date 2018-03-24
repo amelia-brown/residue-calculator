@@ -8,13 +8,17 @@ import styles from './styles'
 
 export default ({farm}) => (
   <Card>
-    <Graph coverage={farm.coverage} />
+    {
+      farm.get('coverage')
+        ? <Graph coverage={farm.get('coverage')} />
+        : <Copy type='subtitle'>No coverage data available</Copy>
+    }
     <div className={styles.section}>
       <Copy type='body'>
-        Name: {farm.name}
+        Name: {farm.get('name')}
       </Copy>
       <Copy type='body'>
-        Address: {farm.address}
+        Address: {farm.get('address')}
       </Copy>
     </div>
   </Card>

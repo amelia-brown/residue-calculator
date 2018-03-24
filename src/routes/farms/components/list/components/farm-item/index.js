@@ -6,13 +6,14 @@ import ListItem from 'components/list-item'
 import styles from './styles'
 
 export default ({farm}) => {
+  if (!farm) return null
   return (
     <Link
       className={styles.link}
-      to={`farms/${farm.id}`}>
+      to={`farms/${farm.get('id')}`}>
       <ListItem
-        title={farm.name}
-        subtitle={farm.address}
+        title={farm.get('name')}
+        subtitle={farm.get('address')}
         action='go' />
     </Link>
   )

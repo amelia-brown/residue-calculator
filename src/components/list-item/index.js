@@ -8,7 +8,7 @@ import styles from './styles.sass'
 
 const ListItem = ({
   className,
-  title, // required
+  title,
   subtitle,
   action
 }) => (

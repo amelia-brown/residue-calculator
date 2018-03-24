@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux-immutable'
-import { routerReducer as router } from 'react-router-redux'
+
+import farms from './farms'
 
 export default combineReducers({
-  router
+  farms
 })

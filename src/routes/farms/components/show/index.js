@@ -1,20 +1,30 @@
 import React from 'react'
+import { createSelector } from 'reselect'
+import { connect } from 'react-redux'
 
+import * as farms from 'modules/farms'
 import Content from 'components/content'
 import Title from 'components/title'
 
 import Info from './components/info'
 
-import data from '../../data'
-
-export default ({match}) => {
-  const farm = data[match.params.id]
+const Show = ({farm}) => {
   return (
     <Content>
       <Title>
-        {farm.name}
+        {farm.get('name')}
       </Title>
       <Info farm={farm} />
     </Content>
   )
 }
+
+export default connect(
+  createSelector(
+    farms.selectors.getFarms,
+    (_, {match: {params: {id}}}) => id,
+    (farms, id) => ({
+      farm: farms.get(id)
+    })
+  )
+)(Show)
