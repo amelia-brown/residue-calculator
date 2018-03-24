@@ -28,7 +28,6 @@ class Create extends Component {
   handleSubmit (e) {
     e.preventDefault()
     this.props.dispatch(farms.actions.create({
-      id: 1,
       name: this.state.values.name,
       address: this.state.values.address,
       city: this.state.values.city

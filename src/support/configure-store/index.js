@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import {
   applyMiddleware,
   compose,
@@ -8,13 +7,11 @@ import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 import { routerMiddleware } from 'react-router-redux'
 
-import { storage, getStateFromStorage } from 'support/middleware'
+import { storage } from 'support/middleware'
 
 import rootReducer from 'modules'
 
-const INITIAL_STATE = Immutable.fromJS(getStateFromStorage())
-
-export default (state = INITIAL_STATE, history) => {
+export default (state, history) => {
   const middlewares = [
     storage,
     thunkMiddleware,

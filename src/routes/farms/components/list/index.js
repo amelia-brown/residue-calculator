@@ -2,7 +2,7 @@ import React from 'react'
 import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 
-import * as farms from 'module.farms'
+import * as farms from 'modules/farms'
 import Content from 'components/content'
 import Title from 'components/title'
 import Button from 'components/button'
@@ -22,12 +22,15 @@ const List = ({history, farms}) => {
       </Button>
 
       <FarmList
-        farms={data} />
+        farms={farms} />
 
     </Content>
   )
 }
 
 export default connect(
-  createSelector()
+  createSelector(
+    farms.selectors.getFarms,
+    farms => ({farms})
+  )
 )(List)

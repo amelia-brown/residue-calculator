@@ -4,11 +4,15 @@ import FarmItem from '../farm-item'
 import styles from './styles'
 
 export default ({farms}) => {
+  let farmMap = farms.toOrderedMap()
   return (
     <div className={styles.list}>
       {
-        Object.keys(farms).map(i =>
-          <FarmItem farm={farms[i]} />)
+        farmMap.map(farm => {
+          return (
+            <FarmItem farm={farm} />
+          )
+        })
       }
     </div>
   )

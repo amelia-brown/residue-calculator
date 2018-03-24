@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4'
+
 export const READ = 'farms/READ'
 export const READ_ALL = 'farms/READ_ALL'
 export const CREATE = 'farms/CREATE'
@@ -13,5 +15,8 @@ export const readAll = () => ({
 
 export const create = data => ({
   type: CREATE,
-  payload: data
+  payload: {
+    id: uuid(),
+    ...data
+  }
 })

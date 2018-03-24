@@ -1,11 +1,31 @@
-export const getStateFromStorage = () => {
-  if (typeof localStorage !== 'undefined') {
-    let result = localStorage.getItem('data')
-    return result
-      ? JSON.parse(result)
-      : {}
+const defaultState = {
+  farms: {},
+  photos: {}
+}
+
+export const loadState = () => {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      let result = localStorage.getItem('data')
+      return result
+        ? JSON.parse(result)
+        : defaultState
+    }
+    return defaultState
+  } catch (err) {
+    return defaultState
   }
-  return false
+}
+
+export const saveState = (state) => {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      let result = JSON.stringify(state)
+      localStorage.setItem('data', result)
+    }
+  } catch (err) {
+    console.error('Error saving to storage')
+  }
 }
 
 export const storage = store => next => action => {

@@ -78,6 +78,8 @@
     "react-router": "^4.2.0",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
+    "uuid": "^3.2.1",
     "webpack-dev-middleware": "^3.0.1"
   }
 }
