@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 
 import Content from 'components/content'
 import Title from 'components/title'
@@ -7,7 +6,7 @@ import Button from 'components/button'
 
 import styles from './styles.sass'
 
-const Home = ({history}) => (
+export default ({history}) => (
   <div className={styles.wrapper}>
     <Content className={styles.content}>
       <Title>
@@ -36,5 +35,3 @@ const Home = ({history}) => (
     </Content>
   </div>
 )
-
-export default withRouter(Home)

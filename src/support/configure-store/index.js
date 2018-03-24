@@ -6,12 +6,17 @@ import {
 } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
-import {routerMiddleware} from 'react-router-redux'
+import { routerMiddleware } from 'react-router-redux'
+
+import { storage, getStateFromStorage } from 'support/middleware'
 
 import rootReducer from 'modules'
 
-export default (state = Immutable.Map(), history) => {
+const INITIAL_STATE = Immutable.fromJS(getStateFromStorage())
+
+export default (state = INITIAL_STATE, history) => {
   const middlewares = [
+    storage,
     thunkMiddleware,
     // fetchMiddleware,
     promiseMiddleware(),

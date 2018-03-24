@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 
+import * as farms from 'modules/farms'
 import Content from 'components/content'
 import Title from 'components/title'
 import FormField from 'components/form-field'
+import Button from 'components/button'
 
 import styles from './styles'
 
@@ -13,13 +16,23 @@ let validate = (value) => {
   return false
 }
 
-export default class Create extends Component {
+class Create extends Component {
   state = {
     values: {
       name: '',
       address: '',
       city: ''
     }
+  }
+
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.dispatch(farms.actions.create({
+      id: 1,
+      name: this.state.values.name,
+      address: this.state.values.address,
+      city: this.state.values.city
+    }))
   }
 
   handleChange (type) {
@@ -57,9 +70,18 @@ export default class Create extends Component {
             value={this.state.values.city}
             validate={validate}
             label={'City'} />
+
+          <Button
+            onClick={::this.handleSubmit}>
+            Create
+          </Button>
         </form>
 
       </Content>
     )
   }
 }
+
+export default connect(
+  () => ({})
+)(Create)
