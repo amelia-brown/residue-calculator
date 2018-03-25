@@ -4,7 +4,7 @@ import FarmItem from '../farm-item'
 import styles from './styles'
 
 export default ({farms}) => {
-  let farmMap = farms.toOrderedMap()
+  let farmMap = farms.valueSeq()
   return (
     <div className={styles.list}>
       {
