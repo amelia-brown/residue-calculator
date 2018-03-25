@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import RoundButton from 'components/round-button'
+
 import styles from './styles'
 
 const BLUE = [26, 255, 234]
@@ -9,15 +11,18 @@ function match (current, target, threshold = 20) {
   return Math.abs(current - target) <= threshold
 }
 
-function findMatchingArea (data, target) {
+function findMatchingArea (data, colors) {
   for (var i = 0; i < data.length; i += 4) {
-    let r = match(data[i], target[0])
-    let g = match(data[i + 1], target[1])
-    let b = match(data[i + 2], target[2])
-    if (r && g && b) {
-      data[i] = BLUE[0]
-      data[i + 1] = BLUE[1]
-      data[i + 2] = BLUE[2]
+    for (var j = 0; j < colors.length; j++) {
+      let target = colors[j]
+      let r = match(data[i], target[0])
+      let g = match(data[i + 1], target[1])
+      let b = match(data[i + 2], target[2])
+      if (r && g && b) {
+        data[i] = BLUE[0]
+        data[i + 1] = BLUE[1]
+        data[i + 2] = BLUE[2]
+      }
     }
   }
   return data
@@ -26,7 +31,8 @@ function findMatchingArea (data, target) {
 export default class Home extends Component {
   state = {
     height: 0,
-    width: 0
+    width: 0,
+    displaySelection: true
   }
 
   boundMouseDown = ::this.handleMouseDown
@@ -37,7 +43,7 @@ export default class Home extends Component {
       height: window.innerHeight
     })
 
-    const canvas = document.querySelector('canvas')
+    const canvas = document.getElementById('original')
     const context = canvas.getContext('2d')
 
     let image = new Image()
@@ -91,6 +97,12 @@ export default class Home extends Component {
     window.removeEventListener('mousedown', this.boundMouseDown)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.colors !== nextProps.colors) {
+      this.handleReplace(nextProps.colors)
+    }
+  }
+
   setDimensions () {
     this.setState({
       height: window.innerHeight,
@@ -99,38 +111,66 @@ export default class Home extends Component {
   }
 
   handleMouseDown (e) {
-    const canvas = document.querySelector('canvas')
+    if (e.target.tagName !== 'CANVAS') return
+    const canvas = document.getElementById('original')
     const context = canvas.getContext('2d')
 
     let color = context.getImageData(e.clientX, e.clientY, 1, 1).data
 
-    this.handleReplace(color)
+    this.props.selectColor(Array.from(color))
   }
 
-  handleReplace (color) {
-    let canvas = document.querySelector('canvas')
-    const context = canvas.getContext('2d')
+  handleReplace (colors) {
+    const originalCanvas = document.getElementById('original')
+    const originalContext = originalCanvas.getContext('2d')
 
-    let data = context
+    const selectionCanvas = document.getElementById('selection')
+    const selectionContext = selectionCanvas.getContext('2d')
+
+    let data = originalContext
       .getImageData(0, 0, this.state.width, this.state.height)
       .data
 
     let pixels = new ImageData(
-      findMatchingArea(data, color),
+      findMatchingArea(data, colors),
       this.state.width,
       this.state.height
     )
 
-    context.putImageData(pixels, 0, 0)
+    selectionContext.putImageData(pixels, 0, 0)
+  }
+
+  toggleDisplaySelection () {
+    this.setState({
+      displaySelection: !this.state.displaySelection
+    })
   }
 
   render () {
+    let icon = this.state.displaySelection
+      ? 'hide'
+      : 'show'
     return (
       <div className={styles.container}>
         <canvas
+          id='original'
           width={this.state.width}
           height={this.state.height}
           className={styles.canvas} />
+        <canvas
+          id='selection'
+          style={{
+            opacity: this.state.displaySelection
+              ? '1'
+              : '0'
+          }}
+          width={this.state.width}
+          height={this.state.height}
+          className={styles.canvas} />
+        <RoundButton
+          type={icon}
+          onClick={::this.toggleDisplaySelection}
+          className={styles.toggle} />
       </div>
     )
   }

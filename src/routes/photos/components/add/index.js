@@ -50,7 +50,8 @@ class Add extends Component {
 
         <Button>
 
-          <label for='file-input'>
+          <label
+            htmlFor='file-input'>
             Choose File
           </label>
 

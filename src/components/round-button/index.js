@@ -3,15 +3,20 @@ import React from 'react'
 import styles from './styles.sass'
 
 const ICONS = {
-  go: 'chevron_right'
+  go: 'chevron_right',
+  close: 'close',
+  show: 'visibility',
+  hide: 'visibility_off'
 }
 
 const RoundButton = ({
   className,
   type,
-  dark
+  dark,
+  onClick
 }) => (
   <div
+    onClick={onClick}
     className={`
       ${styles.base}
       ${className}

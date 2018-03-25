@@ -20,10 +20,14 @@ class Edit extends Component {
   }
 
   removeColor (color) {
-    return () => {
+    return (e) => {
+      e.stopPropagation()
       this.setState({
         colors: this.state.colors
-          .filter(item => item !== color)
+          .filter(item => {
+            let match = item.every((val, i) => val === color[i])
+            return !match
+          })
       })
     }
   }

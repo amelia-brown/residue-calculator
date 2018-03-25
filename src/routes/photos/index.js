@@ -9,7 +9,8 @@ export default ({match}) => {
   return (
     <Switch>
       <Route
-        path={`${match.path}/add`}
+        exact
+        path={`${match.path}`}
         component={PhotoAdd} />
       <Route
         exact
