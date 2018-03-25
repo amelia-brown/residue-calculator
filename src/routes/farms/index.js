@@ -6,20 +6,18 @@ import FarmShow from './components/show'
 import FarmCreate from './components/create'
 
 export default ({match}) => (
-  <div>
-    <Switch>
-      <Route
-        component={FarmCreate}
-        path={`${match.path}/create`}
-        exact />
-      <Route
-        component={FarmShow}
-        path={`${match.path}/:id`}
-        exact />
-      <Route
-        component={FarmList}
-        path={match.path}
-        exact />
-    </Switch>
-  </div>
+  <Switch>
+    <Route
+      component={FarmCreate}
+      path={`${match.path}/create`}
+      exact />
+    <Route
+      component={FarmShow}
+      path={`${match.path}/:id`}
+      exact />
+    <Route
+      component={FarmList}
+      path={match.path}
+      exact />
+  </Switch>
 )

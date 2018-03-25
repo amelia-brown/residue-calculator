@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import uuid from 'uuid/v4'
 
 import * as farms from 'modules/farms'
 import Content from 'components/content'
@@ -30,6 +31,7 @@ class Create extends Component {
     this.props.dispatch(farms.actions.create({
       name: this.state.values.name,
       address: this.state.values.address,
+      id: uuid(),
       city: this.state.values.city
     }))
   }
