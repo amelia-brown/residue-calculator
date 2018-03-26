@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import uuid from 'uuid/v4'
+import Uri from 'urijs'
 
 import * as fields from 'modules/fields'
 import Content from 'components/content'
@@ -26,10 +27,13 @@ class Create extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
+    let farm = new Uri().search(true).farm
     this.props.dispatch(fields.actions.create({
       name: this.state.values.name,
       id: uuid()
-    }))
+    },
+    farm
+    ))
     this.props.history.push('')
   }
 

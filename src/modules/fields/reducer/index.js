@@ -8,7 +8,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actions.CREATE:
       return state.merge({
-        [action.payload.id]: action.payload
+        [action.payload.data.id]: action.payload.data
       })
     default:
       return state

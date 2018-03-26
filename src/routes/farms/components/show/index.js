@@ -26,7 +26,7 @@ const Show = ({farm}) => {
 
       <Link
         className={styles.button}
-        to={'/fields/create'}>
+        to={`/fields/create?farm=${farm.get('id')}`}>
         <Button>
           New Field
         </Button>
