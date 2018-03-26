@@ -1,0 +1,31 @@
+@import 'support/colors'
+
+.base
+
+.container
+  position: relative
+
+.canvas
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  margin: 0 auto
+
+.toggle
+  display: flex
+  justify-content: center
+  padding: 8px 0
+
+.toggle-button
+  border: none
+  outline: none
+  height: 32px
+  width: 32px
+  margin: 0 8px
+  border-radius: 50%
+  background: transparent
+  border: 2px solid $accent
+
+.selected
+  background: $accent

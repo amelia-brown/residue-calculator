@@ -5,7 +5,6 @@ import Root from 'containers/root'
 import Home from './home'
 import Farms from './farms'
 import Photos from './photos'
-import NewPhoto from './new-photo'
 
 export default renderRoutes([
   {
@@ -20,11 +19,6 @@ export default renderRoutes([
         component: Photos,
         key: 'photos',
         path: '/photos'
-      },
-      {
-        component: NewPhoto,
-        key: 'new-photo',
-        path: '/new-photo'
       },
       {
         component: Home,

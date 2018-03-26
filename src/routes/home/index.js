@@ -15,7 +15,7 @@ export default ({history}) => (
       <nav className={styles.nav}>
         <Button
           primary
-          onClick={() => history.push('/new-photo')}
+          onClick={() => history.push('/photos')}
           className={styles.button}>
           New Photo
         </Button>

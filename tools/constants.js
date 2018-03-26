@@ -21,7 +21,8 @@ const GLOBALS = [
   'fetch',
   'Image',
   'ImageData',
-  'localStorage'
+  'localStorage',
+  'FileReader'
 ]
 
 module.exports = {
