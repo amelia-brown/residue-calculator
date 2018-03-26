@@ -1,32 +1,11 @@
 import React, { Component } from 'react'
 
 import RoundButton from 'components/round-button'
+import { findMatchingArea } from 'support/mixins'
 
 import styles from './styles'
 
-const BLUE = [26, 255, 234]
 // const BLUE = [255, 0, 255] // [73, 0, 255]
-
-function match (current, target, threshold = 20) {
-  return Math.abs(current - target) <= threshold
-}
-
-function findMatchingArea (data, colors) {
-  for (var i = 0; i < data.length; i += 4) {
-    for (var j = 0; j < colors.length; j++) {
-      let target = colors[j]
-      let r = match(data[i], target[0])
-      let g = match(data[i + 1], target[1])
-      let b = match(data[i + 2], target[2])
-      if (r && g && b) {
-        data[i] = BLUE[0]
-        data[i + 1] = BLUE[1]
-        data[i + 2] = BLUE[2]
-      }
-    }
-  }
-  return data
-}
 
 export default class Home extends Component {
   state = {
@@ -147,7 +126,7 @@ export default class Home extends Component {
   }
 
   render () {
-    let icon = this.state.displaySelection
+    let displayIcon = this.state.displaySelection
       ? 'hide'
       : 'show'
     return (
@@ -167,10 +146,19 @@ export default class Home extends Component {
           width={this.state.width}
           height={this.state.height}
           className={styles.canvas} />
-        <RoundButton
-          type={icon}
-          onClick={::this.toggleDisplaySelection}
-          className={styles.toggle} />
+        <div className={styles.actions}>
+          {
+            this.props.colors.length > 1 &&
+              <RoundButton
+                type='check'
+                onClick={this.props.confirm}
+                className={styles.action} />
+          }
+          <RoundButton
+            type={displayIcon}
+            onClick={::this.toggleDisplaySelection}
+            className={styles.action} />
+        </div>
       </div>
     )
   }

@@ -4,6 +4,7 @@ import styles from './styles.sass'
 
 const ICONS = {
   go: 'chevron_right',
+  check: 'check',
   close: 'close',
   show: 'visibility',
   hide: 'visibility_off'

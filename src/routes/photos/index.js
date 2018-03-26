@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import PhotoAdd from './components/add'
 import PhotoEdit from './components/edit'
-// import PhotoShow from './components/show'
+import PhotoShow from './components/show'
 
 export default ({match}) => {
   return (
@@ -16,12 +16,10 @@ export default ({match}) => {
         exact
         path={`${match.path}/:id/edit`}
         component={PhotoEdit} />
-      {/*
-        <Route
-          component={ShowShow}
-          exact
-          path={`${match.path}/:id`} />
-      */}
+      <Route
+        component={PhotoShow}
+        exact
+        path={`${match.path}/:id`} />
     </Switch>
   )
 }

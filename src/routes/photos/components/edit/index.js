@@ -14,6 +14,7 @@ class Edit extends Component {
   }
 
   addColor (color) {
+    if (this.state.colors.length > 3) return
     this.setState({
       colors: [...this.state.colors, color]
     })
@@ -32,11 +33,22 @@ class Edit extends Component {
     }
   }
 
+  confirm () {
+    let id = this.props.photo.get('id')
+    this.props.dispatch(photos.actions.edit({
+      id,
+      property: 'selection',
+      value: this.state.colors
+    }))
+    this.props.history.push(`/photos/${id}`)
+  }
+
   render () {
     return (
       <div className={styles.container}>
         <SelectColors
           photo={this.props.photo}
+          confirm={::this.confirm}
           selectColor={::this.addColor}
           colors={this.state.colors} />
         <Selection
