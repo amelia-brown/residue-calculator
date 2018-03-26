@@ -1,5 +1,6 @@
 const defaultState = {
   farms: {},
+  fields: {},
   photos: {}
 }
 

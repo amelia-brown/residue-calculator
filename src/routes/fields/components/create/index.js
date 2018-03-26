@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import uuid from 'uuid/v4'
 
-import * as farms from 'modules/farms'
+import * as fields from 'modules/fields'
 import Content from 'components/content'
 import Title from 'components/title'
 import FormField from 'components/form-field'
@@ -20,20 +20,17 @@ let validate = (value) => {
 class Create extends Component {
   state = {
     values: {
-      name: '',
-      address: '',
-      city: ''
+      name: ''
     }
   }
 
   handleSubmit (e) {
     e.preventDefault()
-    this.props.dispatch(farms.actions.create({
+    this.props.dispatch(fields.actions.create({
       name: this.state.values.name,
-      address: this.state.values.address,
-      id: uuid(),
-      city: this.state.values.city
+      id: uuid()
     }))
+    this.props.history.push('')
   }
 
   handleChange (type) {
@@ -50,9 +47,8 @@ class Create extends Component {
   render () {
     return (
       <Content>
-
         <Title>
-          New Farm
+          New Field
         </Title>
 
         <form className={styles.section}>
@@ -61,23 +57,11 @@ class Create extends Component {
             value={this.state.values.name}
             validate={validate}
             label={'Name'} />
-          <FormField
-            onChange={::this.handleChange('address')}
-            value={this.state.values.address}
-            validate={validate}
-            label={'Address'} />
-          <FormField
-            onChange={::this.handleChange('city')}
-            value={this.state.values.city}
-            validate={validate}
-            label={'City'} />
 
-          <Button
-            onClick={::this.handleSubmit}>
+          <Button onClick={::this.handleSubmit}>
             Create
           </Button>
         </form>
-
       </Content>
     )
   }
