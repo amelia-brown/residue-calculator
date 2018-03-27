@@ -13,12 +13,13 @@ export default (state = INITIAL_STATE, action) => {
     case 'fields/CREATE':
       let fields = state.getIn([
         action.payload.farm,
-        action.payload.data.fields
+        'fields'
       ]) || new Immutable.List()
       fields = fields.concat(action.payload.data.id)
-      return state.merge({
-        [action.payload.farm]: {fields}
-      })
+      return state.setIn([
+        action.payload.farm,
+        'fields'
+      ], fields)
     default:
       return state
   }

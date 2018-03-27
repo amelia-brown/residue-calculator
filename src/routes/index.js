@@ -12,19 +12,19 @@ export default renderRoutes([
     component: Root,
     routes: [
       {
-        component: Farms,
-        key: 'farms',
-        path: '/farms'
+        component: Photos,
+        key: 'photos',
+        path: '/farms/:id/fields/:id/photos'
       },
       {
         component: Fields,
         key: 'fields',
-        path: '/fields'
+        path: '/farms/:id/fields'
       },
       {
-        component: Photos,
-        key: 'photos',
-        path: '/photos'
+        component: Farms,
+        key: 'farms',
+        path: '/farms'
       },
       {
         component: Home,
