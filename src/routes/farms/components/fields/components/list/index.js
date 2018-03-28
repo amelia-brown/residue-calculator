@@ -6,7 +6,7 @@ import Title from 'components/title'
 export default () => (
   <Content>
     <Title>
-      Show Field
+      Field List
     </Title>
   </Content>
 )

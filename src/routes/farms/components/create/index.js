@@ -28,12 +28,14 @@ class Create extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
+    let id = uuid()
     this.props.dispatch(farms.actions.create({
       name: this.state.values.name,
       address: this.state.values.address,
-      id: uuid(),
+      id,
       city: this.state.values.city
     }))
+    this.props.history.push(`/farms/${id}`)
   }
 
   handleChange (type) {

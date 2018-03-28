@@ -49,11 +49,10 @@ export default connect(
     fields.selectors.getFields,
     photos.selectors.getPhotos,
     (_, {match: {params}}) => {
-      console.log(params)
       return params.fieldId
     },
-    (fields, photos, id) => ({
-      field: getFieldPhotos(id, fields, photos)
+    (fieldList, photoList, id) => ({
+      field: getFieldPhotos(id, fieldList, photoList)
     })
   )
 )(Show)

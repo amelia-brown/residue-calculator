@@ -13,9 +13,12 @@ export const readAll = () => ({
   type: READ_ALL
 })
 
-export const create = data => ({
+export const create = (data, field) => ({
   type: CREATE,
-  payload: data
+  payload: {
+    data,
+    field
+  }
 })
 
 export const edit = data => ({

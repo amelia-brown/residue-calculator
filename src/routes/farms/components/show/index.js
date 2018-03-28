@@ -31,7 +31,7 @@ const Show = ({farm, match}) => {
 
       <Link
         className={styles.button}
-        to={`fields/create`}>
+        to={`${match.url}/fields/create`}>
         <Button>
           New Field
         </Button>
@@ -46,8 +46,10 @@ export default connect(
     farms.selectors.getFarms,
     fields.selectors.getFields,
     (_, {match: {params: {farmId}}}) => farmId,
-    (farms, fields, id) => ({
-      farm: getFarmFields(id, farms, fields)
-    })
+    (farmList, fieldList, id) => {
+      return ({
+        farm: getFarmFields(id, farmList, fieldList)
+      })
+    }
   )
 )(Show)

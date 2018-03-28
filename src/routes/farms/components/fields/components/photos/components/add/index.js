@@ -33,11 +33,15 @@ class Add extends Component {
 
   savePhoto (file) {
     let id = uuid()
+    let field = this.props.match.params.fieldId
+
     this.props.dispatch(photos.actions.create({
       timestamp: Date.now(),
       id,
       file
-    }))
+    },
+    field
+    ))
     this.props.history.push(`${this.props.match.url}/${id}/edit`)
   }
 

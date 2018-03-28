@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import EmptyList from 'components/empty-list'
 import ListItem from 'components/list-item'
 
 import styles from './styles'
 
 export default ({fields, path}) => {
-  if (!fields) return null
+  if (!fields.count()) {
+    return <EmptyList type={'field'} />
+  }
   return fields.map(field => {
     return (
       <Link
