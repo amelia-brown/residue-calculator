@@ -15,6 +15,7 @@ export default class Graph extends Component {
   }
 
   render () {
+    if (!this.props.coverage) return null
     return (
       <div className={styles.base}>
         <svg width='224' height='224'>

@@ -1,8 +1,8 @@
-export const READ = 'photos/READ'
-export const READ_ALL = 'photos/READ_ALL'
-export const CREATE = 'photos/CREATE'
-export const EDIT = 'photos/EDIT'
-export const DESTROY = 'photos/DESTROY'
+export const READ = 'fields/READ'
+export const READ_ALL = 'fields/READ_ALL'
+export const CREATE = 'fields/CREATE'
+export const EDIT = 'fields/EDIT'
+export const DESTROY = 'fields/DESTROY'
 
 export const read = id => ({
   type: READ,
@@ -13,11 +13,11 @@ export const readAll = () => ({
   type: READ_ALL
 })
 
-export const create = (data, field) => ({
+export const create = (data, farm) => ({
   type: CREATE,
   payload: {
     data,
-    field
+    farm
   }
 })
 

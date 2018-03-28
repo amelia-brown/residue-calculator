@@ -10,16 +10,16 @@ export default ({match}) => {
     <Switch>
       <Route
         exact
-        path={`${match.path}`}
+        path={match.path}
         component={PhotoAdd} />
       <Route
         exact
-        path={`${match.path}/:id/edit`}
+        path={`${match.path}/:photoId/edit`}
         component={PhotoEdit} />
       <Route
         component={PhotoShow}
         exact
-        path={`${match.path}/:id`} />
+        path={`${match.path}/:photoId`} />
     </Switch>
   )
 }
