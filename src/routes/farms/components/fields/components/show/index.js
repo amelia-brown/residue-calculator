@@ -16,7 +16,7 @@ import Graph from './components/graph'
 import PhotoList from './components/photos'
 import styles from './styles.sass'
 
-const Show = ({field}) => (
+const Show = ({field, match}) => (
   <Content>
     <Title>
       {field.get('name')}
@@ -36,7 +36,7 @@ const Show = ({field}) => (
 
     <Link
       className={styles.button}
-      to={`photos`}>
+      to={`${match.url}/photos`}>
       <Button>
         Take New Photo
       </Button>
@@ -48,7 +48,10 @@ export default connect(
   createSelector(
     fields.selectors.getFields,
     photos.selectors.getPhotos,
-    (_, {match: {params: {id}}}) => id,
+    (_, {match: {params}}) => {
+      console.log(params)
+      return params.fieldId
+    },
     (fields, photos, id) => ({
       field: getFieldPhotos(id, fields, photos)
     })

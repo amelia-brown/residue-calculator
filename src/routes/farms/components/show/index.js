@@ -45,7 +45,7 @@ export default connect(
   createSelector(
     farms.selectors.getFarms,
     fields.selectors.getFields,
-    (_, {match: {params: {id}}}) => id,
+    (_, {match: {params: {farmId}}}) => farmId,
     (farms, fields, id) => ({
       farm: getFarmFields(id, farms, fields)
     })

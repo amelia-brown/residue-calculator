@@ -38,7 +38,7 @@ class Add extends Component {
       id,
       file
     }))
-    this.props.history.push(`/photos/${id}/edit`)
+    this.props.history.push(`${this.props.match.url}/${id}/edit`)
   }
 
   render () {

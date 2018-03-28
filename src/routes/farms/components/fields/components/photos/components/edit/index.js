@@ -62,7 +62,7 @@ class Edit extends Component {
 export default connect(
   createSelector(
     photos.selectors.getPhotos,
-    (_, {match: {params: {id}}}) => id,
+    (_, {match: {params: {photoId}}}) => photoId,
     (photos, id) => ({
       photo: photos.get(`${id}`)
     })
