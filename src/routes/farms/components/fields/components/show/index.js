@@ -37,7 +37,9 @@ const Show = ({field, match}) => (
       Photos
     </Subtitle>
 
-    <PhotoList photos={field.get('photos')} />
+    <PhotoList
+      path={match.url}
+      photos={field.get('photos')} />
 
     <Link
       className={styles.button}

@@ -28,3 +28,15 @@ export function findMatchingArea (data, colors) {
   }
   return data
 }
+
+export function percentMatchingArea (data) {
+  let match = 0
+  for (var i = 0; i < data.length; i += 4) {
+    if (BLUE.every((c, x) => c === data[i + x])) {
+      match += 1
+    }
+  }
+  let pixels = data.length / 4
+  let percent = match / pixels * 100
+  return percent
+}

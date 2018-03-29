@@ -12,10 +12,10 @@ export default (state = INITIAL_STATE, action) => {
       })
     case actions.EDIT:
       return state.merge(
-        state.setIn([
+        state.set(
           action.payload.id,
-          action.payload.property
-        ], action.payload.value)
+          Immutable.fromJS(action.payload)
+        )
       )
     default:
       return state

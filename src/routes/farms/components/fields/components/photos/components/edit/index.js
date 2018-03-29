@@ -33,14 +33,16 @@ class Edit extends Component {
     }
   }
 
-  confirm () {
-    let id = this.props.photo.get('id')
+  confirm (coverage) {
+    let params = this.props.match.params
+    let path = `/farms/${params.farmId}/fields/${params.fieldId}`
     this.props.dispatch(photos.actions.edit({
-      id,
-      property: 'selection',
-      value: this.state.colors
+      id: this.props.photo.get('id'),
+      ...this.props.photo,
+      selection: this.state.colors,
+      coverage
     }))
-    this.props.history.push(`/photos/${id}`)
+    this.props.history.push(path)
   }
 
   render () {

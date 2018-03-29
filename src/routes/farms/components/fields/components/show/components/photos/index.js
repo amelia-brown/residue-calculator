@@ -6,14 +6,14 @@ import DisplayPhoto from 'components/display-photo'
 
 import styles from './styles'
 
-export default ({photos}) => {
+export default ({photos, path}) => {
   if (!photos || !photos.count()) {
     return <EmptyList type='photo' />
   }
   return photos.map(photo => {
     return (
       <Link
-        to={`photos/${photo.get('id')}`}
+        to={`${path}/photos/${photo.get('id')}`}
         className={styles.link}>
         <DisplayPhoto photo={photo} />
       </Link>

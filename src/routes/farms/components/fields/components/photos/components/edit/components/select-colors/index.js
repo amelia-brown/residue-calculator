@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import RoundButton from 'components/round-button'
-import { findMatchingArea } from 'support/mixins'
+import { findMatchingArea, percentMatchingArea } from 'support/mixins'
 
 import styles from './styles'
 
@@ -13,6 +13,8 @@ export default class Home extends Component {
     width: 0,
     displaySelection: true
   }
+
+  pointerCache = []
 
   boundMouseDown = ::this.handleMouseDown
 
@@ -89,12 +91,14 @@ export default class Home extends Component {
     })
   }
 
+  handlePointerDown (e) {
+    console.log(e)
+  }
+
   handleMouseDown (e) {
     if (e.target.tagName !== 'CANVAS') return
     const canvas = document.getElementById('original')
     const context = canvas.getContext('2d')
-
-    console.log(e)
 
     let color = context.getImageData(e.layerX, e.layerY, 1, 1).data
 
@@ -119,6 +123,18 @@ export default class Home extends Component {
     )
 
     selectionContext.putImageData(pixels, 0, 0)
+  }
+
+  handleConfirm () {
+    const canvas = document.getElementById('selection')
+    const context = canvas.getContext('2d')
+
+    let data = context
+      .getImageData(0, 0, this.state.width, this.state.height)
+      .data
+
+    let percent = percentMatchingArea(data)
+    return this.props.confirm(percent)
   }
 
   toggleDisplaySelection () {
@@ -153,7 +169,7 @@ export default class Home extends Component {
             this.props.colors.length > 1 &&
               <RoundButton
                 type='check'
-                onClick={this.props.confirm}
+                onClick={::this.handleConfirm}
                 className={styles.action} />
           }
           <RoundButton
