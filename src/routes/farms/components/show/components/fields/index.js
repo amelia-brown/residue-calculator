@@ -7,7 +7,7 @@ import ListItem from 'components/list-item'
 import styles from './styles'
 
 export default ({fields, path}) => {
-  if (!fields.count()) {
+  if (!fields || !fields.count()) {
     return <EmptyList type={'field'} />
   }
   return fields.map(field => {

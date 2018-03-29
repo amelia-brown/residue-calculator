@@ -15,7 +15,7 @@ const ListItem = ({
   <Card className={styles.container}>
     <div className={styles.text}>
       <Copy
-        className={styles.title}
+        className={styles.subtitle}
         type='title'>
         {title}
       </Copy>

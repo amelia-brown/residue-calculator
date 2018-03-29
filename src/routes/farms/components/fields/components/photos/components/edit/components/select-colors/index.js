@@ -94,7 +94,9 @@ export default class Home extends Component {
     const canvas = document.getElementById('original')
     const context = canvas.getContext('2d')
 
-    let color = context.getImageData(e.clientX, e.clientY, 1, 1).data
+    console.log(e)
+
+    let color = context.getImageData(e.layerX, e.layerY, 1, 1).data
 
     this.props.selectColor(Array.from(color))
   }

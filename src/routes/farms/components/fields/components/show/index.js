@@ -8,6 +8,7 @@ import * as photos from 'modules/photos'
 import { getFieldPhotos } from 'support/selectors'
 import Content from 'components/content'
 import Title from 'components/title'
+import Subtitle from 'components/subtitle'
 import Button from 'components/button'
 import Copy from 'components/copy'
 import Card from 'components/card'
@@ -32,6 +33,10 @@ const Show = ({field, match}) => (
       </div>
     </Card>
 
+    <Subtitle type='subtitle'>
+      Photos
+    </Subtitle>
+
     <PhotoList photos={field.get('photos')} />
 
     <Link
@@ -48,9 +53,7 @@ export default connect(
   createSelector(
     fields.selectors.getFields,
     photos.selectors.getPhotos,
-    (_, {match: {params}}) => {
-      return params.fieldId
-    },
+    (_, {match: {params: {fieldId}}}) => fieldId,
     (fieldList, photoList, id) => ({
       field: getFieldPhotos(id, fieldList, photoList)
     })

@@ -8,6 +8,7 @@ import * as farms from 'modules/farms'
 import * as fields from 'modules/fields'
 import Content from 'components/content'
 import Title from 'components/title'
+import Subtitle from 'components/subtitle'
 import Button from 'components/button'
 
 import Info from './components/info'
@@ -24,6 +25,10 @@ const Show = ({farm, match}) => {
       </Title>
 
       <Info farm={farm} />
+
+      <Subtitle type='subtitle'>
+        Fields
+      </Subtitle>
 
       <FieldList
         path={match.url}

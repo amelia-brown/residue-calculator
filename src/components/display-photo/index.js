@@ -75,6 +75,7 @@ export default class DisplayPhoto extends Component {
   }
 
   render () {
+    let displayToggle = this.props.photo.get('selection')
     return (
       <div className={styles.base}>
         <div
@@ -99,24 +100,27 @@ export default class DisplayPhoto extends Component {
             height={this.state.height || 100}
             width={this.state.width} />
         </div>
-        <div className={styles.toggle}>
-          <button
-            onClick={::this.toggleOverlay}
-            className={classNames(
-              styles['toggle-button'],
-              {
-                [styles.selected]: !this.state.overlay
-              }
-            )} />
-          <button
-            onClick={::this.toggleOverlay}
-            className={classNames(
-              styles['toggle-button'],
-              {
-                [styles.selected]: this.state.overlay
-              }
-            )} />
-        </div>
+        {
+          displayToggle &&
+            <div className={styles.toggle}>
+              <button
+                onClick={::this.toggleOverlay}
+                className={classNames(
+                  styles['toggle-button'],
+                  {
+                    [styles.selected]: !this.state.overlay
+                  }
+                )} />
+              <button
+                onClick={::this.toggleOverlay}
+                className={classNames(
+                  styles['toggle-button'],
+                  {
+                    [styles.selected]: this.state.overlay
+                  }
+                )} />
+            </div>
+        }
       </div>
     )
   }
