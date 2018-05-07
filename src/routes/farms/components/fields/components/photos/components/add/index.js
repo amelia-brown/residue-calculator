@@ -7,6 +7,8 @@ import Content from 'components/content'
 import Title from 'components/title'
 import Button from 'components/button'
 
+import styles from './styles'
+
 class Add extends Component {
   state = {
     img: false
@@ -71,7 +73,9 @@ class Add extends Component {
         {
           this.state.img &&
             <div>
-              <img src={this.state.img} />
+              <img
+                className={styles.image}
+                src={this.state.img} />
               <Button
                 onClick={::this.handleConfirm}>
                 Confirm

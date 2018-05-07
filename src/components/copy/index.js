@@ -1,4 +1,4 @@
-// import classNames from 'classnames'
+import classnames from 'classnames'
 // import PropTypes from 'prop-types'
 import { createElement } from 'react'
 
@@ -32,12 +32,14 @@ const Copy = ({
     //  },
     //  className
     // )
-    className: `
-        ${styles.base}
-        ${styles[type]}
-        ${dark ? styles.dark : ''}
-        ${className}
-      `
+    className: classnames(
+      styles.base,
+      styles[type],
+      className,
+      {
+        [styles.dark]: dark
+      }
+    )
   }
 )
 

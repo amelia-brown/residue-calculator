@@ -5,9 +5,7 @@ import { findMatchingArea, percentMatchingArea } from 'support/mixins'
 
 import styles from './styles'
 
-// const BLUE = [255, 0, 255] // [73, 0, 255]
-
-export default class Home extends Component {
+export default class SelectColors extends Component {
   state = {
     height: 0,
     width: 0,
@@ -24,8 +22,11 @@ export default class Home extends Component {
       height: window.innerHeight
     })
 
+    let body = document.querySelector('body')
     const canvas = document.getElementById('original')
     const context = canvas.getContext('2d')
+    body.onpointerdown = this.handlePointerDown
+    body.onpointermove = this.handlePointerDown
 
     let image = new Image()
 

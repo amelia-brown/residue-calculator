@@ -7,9 +7,46 @@
 
 .nav
   display: flex
+  width: 100%
   flex-direction: column
   align-items: center
   justify-content: center
+  margin: 16px 0
 
-.button
-  
+.link
+  text-decoration: none
+  width: 100%
+  height: 72px
+  display: flex
+  border-radius: 2px
+  align-items: center
+  justify-content: center
+  background: $card-body
+  box-shadow: $box-shadow
+  margin: 0 0 24px
+  position: relative
+  transition: box-shadow 0.24s ease
+  &:hover
+    box-shadow: $box-shadow-hover
+
+.action
+  position: fixed
+  left: 0
+  bottom: 0
+  width: 100%
+  height: 104px
+  background: $accent
+
+.action-text
+  font-size: 18px
+  display: flex
+  align-items: center
+  justify-content: center
+
+.go
+  position: absolute
+  right: 16px
+
+.icon
+  font-size: 32px
+  margin-right: 8px

@@ -65,13 +65,15 @@ export default class DisplayPhoto extends Component {
       .getImageData(0, 0, this.state.width, this.state.height)
       .data
 
-    let pixels = new ImageData(
-      findMatchingArea(data, this.props.photo.get('selection').toJS()),
-      this.state.width,
-      this.state.height
-    )
+    if (this.props.photo.has('selection')) {
+      let pixels = new ImageData(
+        findMatchingArea(data, this.props.photo.get('selection').toJS()),
+        this.state.width,
+        this.state.height
+      )
 
-    context.putImageData(pixels, 0, 0)
+      context.putImageData(pixels, 0, 0)
+    }
   }
 
   render () {

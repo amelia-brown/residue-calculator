@@ -38,9 +38,10 @@ class Edit extends Component {
     let path = `/farms/${params.farmId}/fields/${params.fieldId}`
     this.props.dispatch(photos.actions.edit({
       id: this.props.photo.get('id'),
-      ...this.props.photo,
-      selection: this.state.colors,
-      coverage
+      data: this.props.photo.merge({
+        selection: this.state.colors,
+        coverage
+      })
     }))
     this.props.history.push(path)
   }

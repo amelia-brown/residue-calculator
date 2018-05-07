@@ -14,7 +14,7 @@ export default (state = INITIAL_STATE, action) => {
       return state.merge(
         state.set(
           action.payload.id,
-          Immutable.fromJS(action.payload)
+          action.payload.data
         )
       )
     default:
