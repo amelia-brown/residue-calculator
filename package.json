@@ -11,6 +11,7 @@
     "build:server": "webpack --config tools/webpack.server",
     "watch:client": "npm run build:client -- --watch",
     "watch:server": "npm run build:server -- --watch",
+    "postinstall": "npm run build",
     "start": "node index.js"
   },
   "repository": {
