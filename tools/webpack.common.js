@@ -85,7 +85,6 @@ switch (CONSTANTS.IS_DEVELOPMENT) {
             uglifyOptions: {
               compress: {
                 warnings: false,
-                screw_ie8: true,
                 drop_debugger: true
               },
               output: {
