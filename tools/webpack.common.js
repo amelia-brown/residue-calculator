@@ -81,7 +81,7 @@ switch (CONSTANTS.IS_DEVELOPMENT) {
         devtool: 'hidden-source-map',
         mode: 'production',
         plugins: [
-          UglifyJSPlugin({
+          UglifyJsPlugin({
             compress: {
               warnings: false,
               screw_ie8: true,
