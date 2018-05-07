@@ -75,6 +75,7 @@
     "immutable": "^3.8.2",
     "lodash.debounce": "^4.0.8",
     "nodemon": "^1.17.2",
+    "pm2": "^2.10.3",
     "react-router": "^4.2.0",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
