@@ -79,7 +79,7 @@ switch (CONSTANTS.IS_DEVELOPMENT) {
         devtool: 'hidden-source-map',
         mode: 'production',
         plugins: [
-          webpack.optimize.UglifyJSPlugin({
+          UglifyJSPlugin({
             compress: {
               warnings: false,
               screw_ie8: true,
