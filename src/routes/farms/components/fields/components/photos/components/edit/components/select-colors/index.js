@@ -93,7 +93,6 @@ export default class SelectColors extends Component {
   }
 
   handlePointerDown (e) {
-    console.log(e)
   }
 
   handleMouseDown (e) {
