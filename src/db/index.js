@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import models from './models'
 
 const USER = process.env.DB_USER
 const DB_NAME = process.env.DB_NAME
@@ -17,5 +18,19 @@ const db = new Sequelize(DB_NAME, USER, PASSWORD, {
     idle: 1000
   }
 })
+
+export const User = db.define('user', models.user)
+export const Farm = db.define('Farm', models.farm)
+export const Field = db.define('Field', models.field)
+export const Photo = db.define('Photo', models.photo)
+
+User.hasMany(Farm)
+Farm.hasMany(Field)
+Field.hasMany(Photo)
+
+User.sync()
+Farm.sync()
+Field.sync()
+Photo.sync()
 
 export default db

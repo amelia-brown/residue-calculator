@@ -6,8 +6,6 @@ import routes from 'managers/routes'
 import middleware from 'managers/middleware'
 import db from 'db'
 
-import initializeModels from 'db/models'
-
 dotenv.config()
 
 const app = express()
@@ -25,8 +23,6 @@ db
   .catch(err => {
     console.error(`Unable to connect to ${DB}:`, err)
   })
-
-initializeModels(db)
 
 app.listen(
   process.env.PORT,

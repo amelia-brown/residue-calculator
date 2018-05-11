@@ -1,35 +1,23 @@
 import Sequelize from 'sequelize'
 
-export default (db) => {
-  const User = db.define('user', {
+export default {
+  user: {
     name: Sequelize.STRING,
     email: Sequelize.STRING
-  })
-
-  const Farm = db.define('farm', {
+  },
+  farm: {
     name: Sequelize.STRING,
     location: Sequelize.STRING,
     coverage: Sequelize.INTEGER
-  })
-
-  const Field = db.define('field', {
+  },
+  field: {
     name: Sequelize.STRING,
     coverage: Sequelize.INTEGER
-  })
-
-  const Photo = db.define('photo', {
+  },
+  photo: {
     name: Sequelize.STRING,
     photo: Sequelize.BLOB,
     coverage_photo: Sequelize.BLOB,
     coverage: Sequelize.INTEGER
-  })
-
-  User.hasMany(Farm)
-  Farm.hasMany(Field)
-  Field.hasMany(Photo)
-
-  User.sync()
-  Farm.sync()
-  Field.sync()
-  Photo.sync()
+  }
 }
