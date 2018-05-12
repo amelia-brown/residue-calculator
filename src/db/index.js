@@ -24,18 +24,27 @@ export const Farm = db.define('Farm', models.farm)
 export const Field = db.define('Field', models.field)
 export const Photo = db.define('Photo', models.photo)
 
-User.hasMany(Farm)
-Farm.belongsTo(User)
+Farm.belongsTo(User, {
+  foreignKey: {
+    field: 'userId',
+    allowNull: false
+  }
+})
 
-Farm.hasMany(Field)
-Field.belongsTo(Farm)
+Field.belongsTo(Farm, {
+  foreignKey: {
+    field: 'farmId',
+    allowNull: false
+  }
+})
 
-Field.hasMany(Photo)
-Photo.belongsTo(Field)
+Photo.belongsTo(Field, {
+  foreignKey: {
+    field: 'farmId',
+    allowNull: false
+  }
+})
 
-User.sync()
-Farm.sync()
-Field.sync()
-Photo.sync()
+db.sync({force: true})
 
 export default db
