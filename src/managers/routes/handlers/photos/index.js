@@ -1,9 +1,9 @@
-import { Farm } from 'db'
+import { Photo } from 'db'
 
 export const read = async (req, res) => {
   try {
-    let farm = await Farm.findById(req.params.id)
-    res.status(200).send(farm)
+    let photo = await Photo.findById(req.params.id)
+    res.status(200).send(photo)
   } catch (err) {
     res.status(400).send(err)
   }
@@ -11,12 +11,12 @@ export const read = async (req, res) => {
 
 export const readAll = async (req, res) => {
   try {
-    let farms = await Farm.findAll({
+    let photos = await Photo.findAll({
       limit: req.params.amt,
       offset: req.params.p,
       order: ['createdAt', 'DESC']
     })
-    res.status(200).send(farms)
+    res.status(200).send(photos)
   } catch (err) {
     res.status(400).send(err)
   }
@@ -24,11 +24,11 @@ export const readAll = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    let farm = await Farm.create({
+    let photo = await Photo.create({
       name: req.body.name,
       location: req.body.location
     })
-    res.status(200).send(farm)
+    res.status(200).send(photo)
   } catch (err) {
     res.status(400).send(err)
   }

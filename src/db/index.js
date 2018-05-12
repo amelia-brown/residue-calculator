@@ -25,8 +25,13 @@ export const Field = db.define('Field', models.field)
 export const Photo = db.define('Photo', models.photo)
 
 User.hasMany(Farm)
+Farm.belongsTo(User)
+
 Farm.hasMany(Field)
+Field.belongsTo(Farm)
+
 Field.hasMany(Photo)
+Photo.belongsTo(Field)
 
 User.sync()
 Farm.sync()

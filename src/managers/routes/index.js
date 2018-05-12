@@ -5,9 +5,9 @@ import configureStore from 'support/configure-store'
 import render from 'support/render'
 
 import * as userHandlers from './handlers/users'
-// import * as farmHandlers from './handlers/farms'
-// import * as fieldHandlers from './handlers/fields'
-// import * as photoHandlers from './handlers/photos'
+import * as farmHandlers from './handlers/farms'
+import * as fieldHandlers from './handlers/fields'
+import * as photoHandlers from './handlers/photos'
 
 export const handleRequest = (req, res) => {
   const context = {}
@@ -42,17 +42,17 @@ export default Object.assign(
       router.get('/api/users/:id', userHandlers.read)
       router.post('/api/users', userHandlers.create)
 
-      // router.get('/api/farms/:id', farmHandlers.read)
-      // router.get('/api/farms', farmHandlers.readAll)
-      // router.post('/api/farms', farmHandlers.create)
+      router.get('/api/farms/:id', farmHandlers.read)
+      router.get('/api/farms', farmHandlers.readAll)
+      router.post('/api/farms', farmHandlers.create)
 
-      // router.get('/api/fields/:id', fieldHandlers.read)
-      // router.get('/api/fields', fieldHandlers.readAll)
-      // router.post('/api/fields', fieldHandlers.create)
+      router.get('/api/fields/:id', fieldHandlers.read)
+      router.get('/api/fields', fieldHandlers.readAll)
+      router.post('/api/fields', fieldHandlers.create)
 
-      // router.get('/api/photos/:id', photoHandlers.read)
-      // router.get('/api/photos', photoHandlers.readAll)
-      // router.post('/api/photos', photoHandlers.create)
+      router.get('/api/photos/:id', photoHandlers.read)
+      router.get('/api/photos', photoHandlers.readAll)
+      router.post('/api/photos', photoHandlers.create)
 
       router.get('*', handleRequest)
       app.use(router)
