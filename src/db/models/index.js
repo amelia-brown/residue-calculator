@@ -1,38 +1,43 @@
 import Sequelize from 'sequelize'
 
-export default {
-  user: {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    email: Sequelize.STRING
+export const user = {
+  // User model
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
-  farm: {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    location: Sequelize.STRING,
-    coverage: Sequelize.INTEGER
+  email: Sequelize.STRING
+}
+
+export const farm = {
+  // Farm model
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
-  field: {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    coverage: Sequelize.INTEGER
+  location: Sequelize.STRING,
+  coverage: Sequelize.INTEGER
+}
+
+export const field = {
+  // Field model
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  coverage: Sequelize.INTEGER
+}
+
+export const photo = {
+  // Photo model
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   photo: {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    photo: {
-      type: Sequelize.BLOB,
-      allowNull: false
-    },
-    coveragePhoto: Sequelize.BLOB,
-    coverage: Sequelize.INTEGER
-  }
+    type: Sequelize.BLOB,
+    allowNull: false
+  },
+  coveragePhoto: Sequelize.BLOB,
+  coverage: Sequelize.INTEGER
 }

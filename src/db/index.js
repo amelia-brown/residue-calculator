@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import models from './models'
+import * as models from './models'
 
 const USER = process.env.DB_USER
 const DB_NAME = process.env.DB_NAME
@@ -24,27 +24,20 @@ export const Farm = db.define('Farm', models.farm)
 export const Field = db.define('Field', models.field)
 export const Photo = db.define('Photo', models.photo)
 
-Farm.belongsTo(User, {
-  foreignKey: {
-    field: 'userId',
-    allowNull: false
-  }
+User.hasMany(Farm, {
+  as: 'farms'
 })
 
-Field.belongsTo(Farm, {
-  foreignKey: {
-    field: 'farmId',
-    allowNull: false
-  }
+Farm.hasMany(Field, {
+  as: 'fields'
 })
 
-Photo.belongsTo(Field, {
-  foreignKey: {
-    field: 'farmId',
-    allowNull: false
-  }
+Field.hasMany(Photo, {
+  as: 'photos'
 })
 
-db.sync({force: true})
+let force = process.env.NODE_ENV !== 'production'
+
+db.sync({force})
 
 export default db

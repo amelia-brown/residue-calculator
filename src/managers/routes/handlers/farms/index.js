@@ -12,9 +12,14 @@ export const read = async (req, res) => {
 export const readAll = async (req, res) => {
   try {
     let farms = await Farm.findAll({
-      limit: req.params.amt,
-      offset: req.params.p,
-      order: ['createdAt', 'DESC']
+      where: {
+        userId: req.params.userId
+      },
+      limit: req.params.amt || 10,
+      offset: req.params.p || 0,
+      order: [
+        ['createdAt', 'DESC']
+      ]
     })
     res.status(200).send(farms)
   } catch (err) {
@@ -26,7 +31,9 @@ export const create = async (req, res) => {
   try {
     let farm = await Farm.create({
       name: req.body.name,
-      location: req.body.location
+      location: req.body.location,
+      coverage: req.params.coverage,
+      userId: req.body.userId
     })
     res.status(200).send(farm)
   } catch (err) {
