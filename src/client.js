@@ -6,20 +6,15 @@ import { hydrate } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import configureStore from 'support/configure-store'
-import { loadState } from 'support/middleware'
 import Mount from 'support/mount'
 
-let state = loadState()
+let state = {}
 const initialState = Immutable.fromJS(state)
 
 const mount = document.getElementById('mount')
 const history = createHistory()
 
 const store = configureStore(initialState, history)
-
-// store.subscribe(() => {
-//  saveState(store.getState)
-// })
 
 const renderComponent = Component => {
   hydrate(

@@ -7,13 +7,10 @@ import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 import { routerMiddleware } from 'react-router-redux'
 
-import { storage } from 'support/middleware'
-
 import rootReducer from 'modules'
 
 export default (state, history) => {
   const middlewares = [
-    storage,
     thunkMiddleware,
     // fetchMiddleware,
     promiseMiddleware(),
