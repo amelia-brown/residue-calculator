@@ -3,6 +3,7 @@ import { renderRoutes } from 'react-router-config'
 import Root from 'containers/root'
 
 import Home from './home'
+import Login from './login'
 import Farms from './farms'
 import Photos from './photos'
 // import Fields from './fields'
@@ -17,6 +18,11 @@ export default renderRoutes([
         key: 'photos',
         path: '/photos',
         exact: true
+      },
+      {
+        component: Login,
+        key: 'login',
+        path: '/login'
       },
       /*
       {

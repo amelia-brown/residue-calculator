@@ -1,7 +1,9 @@
 import passport from 'passport'
-import { FacebookStrategy } from 'passport-facebook'
+import * as PassportFacebook from 'passport-facebook'
 
-import { findOrCreate } from 'managers/routes/users'
+import { findOrCreate } from 'managers/routes/handlers/users'
+
+const FacebookStrategy = PassportFacebook.Strategy
 
 // Init facebook login
 passport.use(new FacebookStrategy({
@@ -9,11 +11,10 @@ passport.use(new FacebookStrategy({
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL
 }, (accessToken, refreshToken, profile, done) => {
-  findOrCreate(profile)
+  findOrCreate(profile, done)
 }))
 
-export const login = async (req, res) =>
-  passport.authenticate('facebook')
+export const login = passport.authenticate('facebook')
 
 export const callback = async (req, res) =>
   passport.authenticate(
