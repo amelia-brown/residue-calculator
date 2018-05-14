@@ -20,3 +20,16 @@ export const create = async (req, res) => {
     res.status(400).send(err)
   }
 }
+
+export const findOrCreate = async (profile, done) => {
+  try {
+    let user = await User.findOrCreate({
+      name: `${profile.givenName} ${profile.familyName}`,
+      email: emails[0].value,
+      photo: photos[0].value
+    })
+    return done(null, user)
+  } catch (err) {
+    return done(err)
+  }
+}

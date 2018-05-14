@@ -8,6 +8,7 @@ import * as userHandlers from './handlers/users'
 import * as farmHandlers from './handlers/farms'
 import * as fieldHandlers from './handlers/fields'
 import * as photoHandlers from './handlers/photos'
+import * as authHandlers from './handlers/auth'
 
 export const handleRequest = (req, res) => {
   const context = {}
@@ -53,6 +54,9 @@ export default Object.assign(
       router.get('/api/photos/:id', photoHandlers.read)
       router.get('/api/photos', photoHandlers.readAll)
       router.post('/api/photos', photoHandlers.create)
+
+      router.get('api/login', authHandlers.login)
+      router.get('api/login/callback', authHandlers.callback)
 
       router.get('*', handleRequest)
       app.use(router)
