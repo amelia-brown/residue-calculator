@@ -8,25 +8,30 @@ export const DESTROY = 'farms/DESTROY'
 
 export const read = id => ({
   type: READ,
-  payload: request(`farms/id`, 'get')
+  payload: request(`farms/${id}`, 'get')
 })
 
-export const readAll = (userId) => ({
+export const readAll = userId => ({
   type: READ_ALL,
   payload: request(`farms`, 'get', {userId})
 })
 
 export const create = data => ({
   type: CREATE,
-  payload: request('farms', 'post', {}, )
+  payload: request('farms', 'post', {}, data)
 })
 
 export const edit = data => ({
   type: EDIT,
-  payload: data
+  payload: request(
+    'farms',
+    'put',
+    {id: data.id},
+    data
+  )
 })
 
 export const destroy = id => ({
   type: DESTROY,
-  payload: id
+  payload: request('farms', 'delete', {id})
 })

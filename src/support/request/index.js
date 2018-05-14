@@ -1,10 +1,10 @@
-import Uri from 'urijs'
+import URI from 'urijs'
 
 const BASE_URL = '/api/'
 
 const configurePath = (path, params) => {
-  let q = new Uri.search(params)
-  return `${BASE_URL}/${path}${q}`
+  let url = new URI(`${BASE_URL}${path}`).search(params)
+  return url
 }
 
 export default (path, type, params = {}, body = {}) => {
@@ -16,6 +16,7 @@ export default (path, type, params = {}, body = {}) => {
       }
     )
     return resp
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
+}
