@@ -1,8 +1,7 @@
 import { Router } from 'express'
+import session from 'express-session'
 import passport from 'passport'
 import * as PassportFacebook from 'passport-facebook'
-
-import { findOrCreate } from 'managers/routes/handlers/users'
 
 import base from 'managers/base'
 import configureStore from 'support/configure-store'
@@ -14,7 +13,6 @@ import * as userHandlers from './handlers/users'
 import * as farmHandlers from './handlers/farms'
 import * as fieldHandlers from './handlers/fields'
 import * as photoHandlers from './handlers/photos'
-// import * as authHandlers from './handlers/auth'
 
 const FacebookStrategy = PassportFacebook.Strategy
 
@@ -23,9 +21,16 @@ passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL
-}, (accessToken, refreshToken, profile, done) => {
-  console.log(profile)
-  findOrCreate(profile, done)
+}, async (accessToken, refreshToken, profile, done) => {
+  const user = await User.findOrCreate({
+    where: {
+      name: profile.displayName
+    },
+    defaults: {
+      name: profile.displayName
+    }
+  })
+  return done(null, user)
 }))
 
 export const handleRequest = (req, res) => {
@@ -48,16 +53,26 @@ export default Object.assign(
   base,
   {
     configureCommon (app) {
-      app.use(passport.initialize())
-      passport.serializeUser(function(user, done) {
-        done(null, user.id);
-      });
+      app.use(session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {secure: true}
+      }))
 
-      passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-          done(err, user);
-        });
-      });
+      app.use(passport.initialize())
+      app.use(passport.session())
+
+      passport.serializeUser((user, done) => {
+        done(null, user)
+      })
+
+      passport.deserializeUser(({id}, done) => {
+        User.findById(id, (err, user) => {
+          done(err, user)
+        })
+      })
+
       const router = Router()
 
       router.use((err, req, res, next) => {
@@ -84,8 +99,8 @@ export default Object.assign(
 
       router.get('/api/login', passport.authenticate('facebook'))
       router.get('/api/login/callback', passport.authenticate('facebook', {
-        sucessRedirect: '/',
-        failureRedirect: '/login'
+        successRedirect: '/',
+        failureRedirect: '/login?error=true'
       }))
 
       router.get('*', handleRequest)
