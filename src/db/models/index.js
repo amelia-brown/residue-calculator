@@ -6,6 +6,7 @@ export const user = {
     type: Sequelize.STRING,
     allowNull: false
   },
+  photo: Sequelize.STRING,
   email: Sequelize.STRING
 }
 

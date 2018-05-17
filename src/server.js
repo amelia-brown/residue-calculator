@@ -1,3 +1,5 @@
+import fs from 'fs'
+import https from 'https'
 import express from 'express'
 import dotenv from 'dotenv'
 
@@ -24,17 +26,22 @@ db
     console.error(`Unable to connect to ${DB}:`, err)
   })
 
-app.listen(
-  process.env.PORT,
-  error => {
-    if (error) {
-      return console.error(
-        'Failed to start the server',
-        error
+https.createServer(
+  {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+  },
+  app)
+  .listen(process.env.PORT,
+    error => {
+      if (error) {
+        return console.error(
+          'Failed to start the server',
+          error
+        )
+      }
+      return console.info(
+        'Started server successfully'
       )
     }
-    return console.info(
-      'Started server successfully'
-    )
-  }
-)
+  )

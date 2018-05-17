@@ -1,13 +1,37 @@
 import { Router } from 'express'
+import session from 'express-session'
+import passport from 'passport'
+import * as PassportFacebook from 'passport-facebook'
 
 import base from 'managers/base'
 import configureStore from 'support/configure-store'
 import render from 'support/render'
 
+import { User } from 'db'
+
 import * as userHandlers from './handlers/users'
 import * as farmHandlers from './handlers/farms'
 import * as fieldHandlers from './handlers/fields'
 import * as photoHandlers from './handlers/photos'
+
+const FacebookStrategy = PassportFacebook.Strategy
+
+// Init facebook login
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL
+}, async (accessToken, refreshToken, profile, done) => {
+  const user = await User.findOrCreate({
+    where: {
+      name: profile.displayName
+    },
+    defaults: {
+      name: profile.displayName
+    }
+  })
+  return done(null, user)
+}))
 
 export const handleRequest = (req, res) => {
   const context = {}
@@ -29,6 +53,26 @@ export default Object.assign(
   base,
   {
     configureCommon (app) {
+      app.use(session({
+        secret: process.env.SECRET
+      }))
+
+      app.use(passport.initialize())
+      app.use(passport.session())
+
+      passport.serializeUser((user, done) => {
+        return done(null, user)
+      })
+
+      passport.deserializeUser(async ({id}, done) => {
+        try {
+          const user = await User.findById(id)
+          return done(null, user)
+        } catch (err) {
+          return done(err)
+        }
+      })
+
       const router = Router()
 
       router.use((err, req, res, next) => {
@@ -40,7 +84,6 @@ export default Object.assign(
       })
 
       router.get('/api/users/:id', userHandlers.read)
-      router.post('/api/users', userHandlers.create)
 
       router.get('/api/farms/:id', farmHandlers.read)
       router.get('/api/farms', farmHandlers.readAll)
@@ -53,6 +96,12 @@ export default Object.assign(
       router.get('/api/photos/:id', photoHandlers.read)
       router.get('/api/photos', photoHandlers.readAll)
       router.post('/api/photos', photoHandlers.create)
+
+      router.get('/api/login', passport.authenticate('facebook'))
+      router.get('/api/login/callback', passport.authenticate('facebook', {
+        successRedirect: '/',
+        failureRedirect: '/login?error=true'
+      }))
 
       router.get('*', handleRequest)
       app.use(router)
