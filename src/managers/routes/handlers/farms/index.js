@@ -13,7 +13,7 @@ export const readAll = async (req, res) => {
   try {
     let farms = await Farm.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       },
       limit: req.params.amt || 10,
       offset: req.params.p || 0,
@@ -33,7 +33,7 @@ export const create = async (req, res) => {
       name: req.body.name,
       location: req.body.location,
       coverage: req.params.coverage,
-      userId: req.body.userId
+      userId: req.user.id
     })
     res.status(200).send(farm)
   } catch (err) {

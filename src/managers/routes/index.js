@@ -54,23 +54,23 @@ export default Object.assign(
   {
     configureCommon (app) {
       app.use(session({
-        secret: process.env.SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {secure: true}
+        secret: process.env.SECRET
       }))
 
       app.use(passport.initialize())
       app.use(passport.session())
 
       passport.serializeUser((user, done) => {
-        done(null, user)
+        return done(null, user)
       })
 
-      passport.deserializeUser(({id}, done) => {
-        User.findById(id, (err, user) => {
-          done(err, user)
-        })
+      passport.deserializeUser(async ({id}, done) => {
+        try {
+          const user = await User.findById(id)
+          return done(null, user)
+        } catch (err) {
+          return done(err)
+        }
       })
 
       const router = Router()
