@@ -1,4 +1,4 @@
-import request from 'support/request'
+import * as requests from 'support/request'
 
 export const READ = 'fields/READ'
 export const READ_ALL = 'fields/READ_ALL'
@@ -8,24 +8,23 @@ export const DESTROY = 'fields/DESTROY'
 
 export const read = id => ({
   type: READ,
-  payload: request(`fields/${id}`, 'get')
+  payload: requests.get(`fields/${id}`)
 })
 
 export const readAll = userId => ({
   type: READ_ALL,
-  payload: request(`fields`, 'get', {userId})
+  payload: requests.get(`fields`, {userId})
 })
 
 export const create = data => ({
   type: CREATE,
-  payload: request('fields', 'post', {}, data)
+  payload: requests.create('fields', {}, data)
 })
 
 export const edit = data => ({
   type: EDIT,
-  payload: request(
+  payload: requests.update(
     'fields',
-    'put',
     {id: data.id},
     data
   )
@@ -33,5 +32,5 @@ export const edit = data => ({
 
 export const destroy = id => ({
   type: DESTROY,
-  payload: request('fields', 'delete', {id})
+  payload: requests.destroy('fields', {id})
 })

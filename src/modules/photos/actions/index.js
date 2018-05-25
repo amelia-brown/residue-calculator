@@ -1,4 +1,4 @@
-import request from 'support/request'
+import * as requests from 'support/request'
 
 export const READ = 'photos/READ'
 export const READ_ALL = 'photos/READ_ALL'
@@ -8,24 +8,23 @@ export const DESTROY = 'photos/DESTROY'
 
 export const read = id => ({
   type: READ,
-  payload: request(`photos/${id}`, 'get')
+  payload: requests.read(`photos/${id}`)
 })
 
 export const readAll = userId => ({
   type: READ_ALL,
-  payload: request('photos', 'get', {userId})
+  payload: requests.read('photos', {userId})
 })
 
 export const create = data => ({
   type: CREATE,
-  payload: request('photos', 'post', {}, data)
+  payload: requests.create('photos', {}, data)
 })
 
 export const edit = data => ({
   type: EDIT,
-  payload: request(
+  payload: requests.update(
     'photos',
-    'put',
     {id: data.id},
     data
   )
@@ -33,5 +32,5 @@ export const edit = data => ({
 
 export const destroy = id => ({
   type: DESTROY,
-  payload: request('photos', 'delete', {id})
+  payload: requests.destroy('photos', {id})
 })

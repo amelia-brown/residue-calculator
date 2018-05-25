@@ -16,7 +16,8 @@ export const farm = {
     type: Sequelize.STRING,
     allowNull: false
   },
-  location: Sequelize.STRING,
+  address: Sequelize.STRING,
+  city: Sequelize.STRING,
   coverage: Sequelize.INTEGER
 }
 

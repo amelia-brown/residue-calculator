@@ -1,36 +1,44 @@
-import React from 'react'
-import { createSelector } from 'reselect'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import Immutable from 'immutable'
 
-import * as farms from 'modules/farms'
 import Content from 'components/content'
 import Title from 'components/title'
 import Button from 'components/button'
+import { read } from 'support/request'
 
 import FarmList from './components/farm-list'
 
-const List = ({history, farms}) => {
-  return (
-    <Content>
+export default class List extends Component {
+  state = {
+    farms: new Immutable.List()
+  }
 
-      <Title>
-        Your Farms
-      </Title>
+  async componentDidMount () {
+    const farms = await read('farms')
+    this.setState({
+      farms
+    })
+  }
 
-      <Button onClick={() => history.push('/farms/create')}>
-        New Farm
-      </Button>
+  render () {
+    let {history} = this.props
+    let {farms} = this.state
 
-      <FarmList
-        farms={farms} />
+    return (
+      <Content>
 
-    </Content>
-  )
+        <Title>
+          Your Farms
+        </Title>
+
+        <Button onClick={() => history.push('/farms/create')}>
+          New Farm
+        </Button>
+
+        <FarmList
+          farms={farms} />
+
+      </Content>
+    )
+  }
 }
-
-export default connect(
-  createSelector(
-    farms.selectors.getFarms,
-    farms => ({farms})
-  )
-)(List)

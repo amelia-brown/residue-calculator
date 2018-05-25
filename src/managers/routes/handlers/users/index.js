@@ -1,5 +1,3 @@
-import { User } from 'db'
-
 export const read = async (req, res) => {
   try {
     let user = req.user

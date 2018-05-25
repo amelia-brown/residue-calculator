@@ -31,12 +31,14 @@ export const create = async (req, res) => {
   try {
     let farm = await Farm.create({
       name: req.body.name,
-      location: req.body.location,
+      address: req.body.address,
+      city: req.body.city,
       coverage: req.params.coverage,
       userId: req.user.id
     })
     res.status(200).send(farm)
   } catch (err) {
+    console.log(err)
     res.status(400).send(err)
   }
 }

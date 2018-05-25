@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
 
-import * as farms from 'modules/farms'
+import { create } from 'support/request'
 import Content from 'components/content'
 import Title from 'components/title'
 import FormField from 'components/form-field'
@@ -17,7 +15,7 @@ let validate = (value) => {
   return false
 }
 
-class Create extends Component {
+export default class Create extends Component {
   state = {
     values: {
       name: '',
@@ -28,14 +26,11 @@ class Create extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    let id = uuid()
-    this.props.dispatch(farms.actions.create({
+    create('farms', {}, {
       name: this.state.values.name,
       address: this.state.values.address,
-      id,
       city: this.state.values.city
-    }))
-    this.props.history.push(`/farms/${id}`)
+    })
   }
 
   handleChange (type) {
@@ -84,7 +79,3 @@ class Create extends Component {
     )
   }
 }
-
-export default connect(
-  () => ({})
-)(Create)

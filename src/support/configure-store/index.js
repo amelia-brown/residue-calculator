@@ -6,11 +6,12 @@ import {
 import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 import { routerMiddleware } from 'react-router-redux'
+import logger from 'redux-logger'
 
 import rootReducer from 'modules'
 
 export default (state, history) => {
-  const middlewares = [
+  let middlewares = [
     thunkMiddleware,
     // fetchMiddleware,
     promiseMiddleware(),
@@ -18,6 +19,12 @@ export default (state, history) => {
     // normalizrMiddleware,
     routerMiddleware(history)
   ]
+
+  if (__IS_DEVELOPMENT__ && __IS_CLIENT__) {
+    middlewares = middlewares.concat(
+      [logger]
+    )
+  }
 
   /* eslint-disable no-underscore-dangle */
 

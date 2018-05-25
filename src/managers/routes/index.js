@@ -54,7 +54,9 @@ export default Object.assign(
   {
     configureCommon (app) {
       app.use(session({
-        secret: process.env.SECRET
+        secret: process.env.SECRET,
+        saveUninitialized: true,
+        resave: false
       }))
 
       app.use(passport.initialize())
@@ -64,7 +66,7 @@ export default Object.assign(
         return done(null, user)
       })
 
-      passport.deserializeUser(async ({id}, done) => {
+      passport.deserializeUser(async ([{id}], done) => {
         try {
           const user = await User.findById(id)
           return done(null, user)

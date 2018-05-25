@@ -1,4 +1,5 @@
 import URI from 'urijs'
+import Immutable from 'immutable'
 
 const BASE_URL = '/api/'
 
@@ -7,16 +8,37 @@ const configurePath = (path, params) => {
   return url
 }
 
-export default (path, type, params = {}, body = {}) => {
-  try {
-    let resp = fetch(configurePath(path, params),
-      {
-        type,
-        body
+const request = method =>
+  async (path, params = {}, body) => {
+    try {
+      let headers = new Headers()
+      headers.append('Content-Type', 'application/json')
+
+      let options = {
+        method,
+        headers,
+        credentials: 'include'
       }
-    )
-    return resp
-  } catch (err) {
-    console.log(err)
+
+      if (body) {
+        options = {
+          ...options,
+          body: JSON.stringify(body)
+        }
+      }
+
+      let resp = await fetch(
+        configurePath(path, params),
+        options
+      )
+      let json = await resp.json()
+      return Immutable.fromJS(json)
+    } catch (err) {
+      console.log(err)
+    }
   }
-}
+
+export const read = request('GET')
+export const create = request('POST')
+export const update = request('PUT')
+export const destroy = request('DELETE')

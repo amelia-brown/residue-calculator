@@ -1,4 +1,4 @@
-import request from 'support/request'
+import * as requests from 'support/request'
 
 export const READ = 'farms/READ'
 export const READ_ALL = 'farms/READ_ALL'
@@ -8,22 +8,24 @@ export const DESTROY = 'farms/DESTROY'
 
 export const read = id => ({
   type: READ,
-  payload: request(`farms/${id}`, 'get')
+  payload: requests.read(`farms/${id}`)
 })
 
-export const readAll = userId => ({
+export const readAll = () => ({
   type: READ_ALL,
-  payload: request(`farms`, 'get', {userId})
+  payload: requests.read(`farms`, {})
 })
 
-export const create = data => ({
-  type: CREATE,
-  payload: request('farms', 'post', {}, data)
-})
+export const create = data => {
+  return ({
+    type: CREATE,
+    payload: requests.create('farms', {}, data)
+  })
+}
 
 export const edit = data => ({
   type: EDIT,
-  payload: request(
+  payload: requests.update(
     'farms',
     'put',
     {id: data.id},
@@ -33,5 +35,5 @@ export const edit = data => ({
 
 export const destroy = id => ({
   type: DESTROY,
-  payload: request('farms', 'delete', {id})
+  payload: requests.destroy('farms', {id})
 })

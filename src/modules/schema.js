@@ -1,29 +1,26 @@
 import { schema } from 'normalizr'
 
-export const farms = new schema.Entity(
-  'farms',
-  {
-    fields: fieldsList
-  },
-  {idAttribute: 'id'}
-)
-
-export const farmsList = [farms]
-
-export const fields = new schema.Entity(
-  'fields',
-  {
-    photos: photosList
-  },
-  {idAttribute: 'id'}
-)
-
-export const fieldsList = [fields]
-
-export const photos = new schema.Entity(
+export const photo = new schema.Entity(
   'photos',
   {},
   {idAttribute: 'id'}
 )
+export const photoList = [photo]
 
-export const photosList = [photos]
+export const field = new schema.Entity(
+  'fields',
+  {
+    photos: photoList
+  },
+  {idAttribute: 'id'}
+)
+export const fieldList = [field]
+
+export const farm = new schema.Entity(
+  'farms',
+  {
+    fields: fieldList
+  },
+  {idAttribute: 'id'}
+)
+export const farmList = [farm]
