@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
 
 import * as fields from 'modules/fields'
 import Content from 'components/content'
@@ -26,13 +25,12 @@ class Create extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    let farm = this.props.match.params.farmId
+    let farmId = this.props.match.params.farmId
 
     this.props.dispatch(fields.actions.create({
       name: this.state.values.name,
-      id: uuid()
-    },
-    farm
+      farmId
+    }
     ))
     this.props.history.push('')
   }

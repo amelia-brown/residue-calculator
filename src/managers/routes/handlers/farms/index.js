@@ -2,7 +2,11 @@ import { Farm } from 'db'
 
 export const read = async (req, res) => {
   try {
-    let farm = await Farm.findById(req.params.id)
+    let farm = await Farm.findById(req.params.id,
+      {
+        include: ['fields']
+      }
+    )
     res.status(200).send(farm)
   } catch (err) {
     res.status(400).send(err)

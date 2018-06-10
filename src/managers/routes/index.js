@@ -85,7 +85,7 @@ export default Object.assign(
           .render('error')
       })
 
-      router.get('/api/users/:id', userHandlers.read)
+      router.get('/api/user', userHandlers.read)
 
       router.get('/api/farms/:id', farmHandlers.read)
       router.get('/api/farms', farmHandlers.readAll)

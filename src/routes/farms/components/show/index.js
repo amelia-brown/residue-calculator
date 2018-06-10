@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { Map } from 'immutable'
 
 import Content from 'components/content'
+import Copy from 'components/copy'
 import Title from 'components/title'
 import Subtitle from 'components/subtitle'
 import Button from 'components/button'
+import Loading from 'components/loading'
 import { read } from 'support/request'
 
 import Info from './components/info'
@@ -14,15 +16,28 @@ import styles from './styles.sass'
 
 export default class Show extends Component {
   state = {
-    farm: new Map()
+    farm: new Map(),
+    loading: false,
+    error: false
   }
 
   async componentDidMount () {
-    let id = this.props.match.params.farmId
-    const farm = await read(`farms/${id}`)
     this.setState({
-      farm
+      loading: true
     })
+    try {
+      let id = this.props.match.params.farmId
+      const farm = await read(`farms/${id}`)
+      this.setState({
+        farm,
+        loading: false
+      })
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error
+      })
+    }
   }
 
   render () {
@@ -43,6 +58,16 @@ export default class Show extends Component {
         <Subtitle type='subtitle'>
           Fields
         </Subtitle>
+
+        {
+          this.loading && <Loading />
+        }
+        {
+          this.error &&
+            <Copy type='body'>
+              There was a problem loading your farms.
+            </Copy>
+        }
 
         <FieldList
           path={match.url}

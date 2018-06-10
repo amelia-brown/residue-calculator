@@ -8,6 +8,8 @@ import bodyParser from 'body-parser'
 import base from 'managers/base'
 import config from 'webpack.client.js'
 
+import auth from './auth'
+
 const ROOT = path.resolve(__dirname, '..', '..', '..')
 
 export default Object.assign(
@@ -37,6 +39,8 @@ export default Object.assign(
           reload: true
         })
       )
+
+      app.use(auth)
     },
     configureProduction (app) {
       app.use('/lib/', express.static(path.resolve(ROOT, 'lib')))

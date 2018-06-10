@@ -24,13 +24,19 @@ export default class Create extends Component {
     }
   }
 
-  handleSubmit (e) {
+  async handleSubmit (e) {
     e.preventDefault()
-    create('farms', {}, {
-      name: this.state.values.name,
-      address: this.state.values.address,
-      city: this.state.values.city
-    })
+    try {
+      const resp = await create('farms', {}, {
+        name: this.state.values.name,
+        address: this.state.values.address,
+        city: this.state.values.city
+      })
+
+      this.props.history.push(`/farms/${resp.get('id')}`)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   handleChange (type) {

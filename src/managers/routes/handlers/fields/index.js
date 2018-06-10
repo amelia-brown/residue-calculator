@@ -13,7 +13,7 @@ export const readAll = async (req, res) => {
   try {
     let fields = await Field.findAll({
       where: {
-        farmId: req.params.farmId
+        FarmId: req.params.farmId
       },
       limit: req.params.amt,
       offset: req.params.p,
