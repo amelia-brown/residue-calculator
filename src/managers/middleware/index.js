@@ -17,7 +17,7 @@ export default Object.assign(
   base,
   {
     configureCommon (app) {
-      app.use(bodyParser.json())
+      app.use(bodyParser.json({limit: '50mb'}))
     },
     configureDevelopment (app) {
       const compiler = webpack(config)

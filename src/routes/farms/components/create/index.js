@@ -35,7 +35,7 @@ export default class Create extends Component {
 
       this.props.history.push(`/farms/${resp.get('id')}`)
     } catch (err) {
-      console.log(err)
+      console.log(err) // eslint-disable-line
     }
   }
 

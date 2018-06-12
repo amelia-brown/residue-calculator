@@ -14,7 +14,7 @@ export default ({match}) => {
         component={PhotoAdd} />
       <Route
         exact
-        path={`${match.path}/:photoId/edit`}
+        path={`${match.path}/edit`}
         component={PhotoEdit} />
       <Route
         component={PhotoShow}

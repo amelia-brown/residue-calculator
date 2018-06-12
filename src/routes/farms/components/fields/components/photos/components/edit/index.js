@@ -1,16 +1,37 @@
 import React, {Component} from 'react'
-import { createSelector } from 'reselect'
-import { connect } from 'react-redux'
+import { Map } from 'immutable'
+import Uri from 'urijs'
 
-import * as photos from 'modules/photos'
-
+import { read, update } from 'support/request'
 import SelectColors from './components/select-colors'
 import Selection from './components/selection'
 import styles from './styles'
 
-class Edit extends Component {
+export default class Edit extends Component {
   state = {
+    photo: new Map(),
+    loading: false,
+    error: false,
     colors: []
+  }
+
+  async componentDidMount () {
+    this.setState({
+      loading: true
+    })
+    try {
+      let id = this.props.match.params.photoId
+      const photo = await read(`photos/${id}`)
+      this.setState({
+        photo,
+        loading: false
+      })
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error
+      })
+    }
   }
 
   addColor (color) {
@@ -33,27 +54,33 @@ class Edit extends Component {
     }
   }
 
-  confirm (coverage) {
+  async confirm (coverage) {
     let params = this.props.match.params
     let path = `/farms/${params.farmId}/fields/${params.fieldId}`
-    this.props.dispatch(photos.actions.edit({
-      id: this.props.photo.get('id'),
-      data: this.props.photo.merge({
-        selection: this.state.colors,
+    try {
+      await update(`photos/${params.photoId}`, {}, {
+        selection: this.state.selection,
         coverage
       })
-    }))
-    this.props.history.push(path)
+      this.props.history.push(path)
+    } catch (error) {
+    }
   }
 
   render () {
+    const photo = this.state.photo
+    let url = new Uri().search(true).url
     return (
       <div className={styles.container}>
-        <SelectColors
-          photo={this.props.photo}
-          confirm={::this.confirm}
-          selectColor={::this.addColor}
-          colors={this.state.colors} />
+        {
+          photo &&
+            <SelectColors
+              photo={photo}
+              url={url}
+              confirm={::this.confirm}
+              selectColor={::this.addColor}
+              colors={this.state.colors} />
+        }
         <Selection
           removeColor={::this.removeColor}
           colors={this.state.colors} />
@@ -61,13 +88,3 @@ class Edit extends Component {
     )
   }
 }
-
-export default connect(
-  createSelector(
-    photos.selectors.getPhotos,
-    (_, {match: {params: {photoId}}}) => photoId,
-    (photos, id) => ({
-      photo: photos.get(`${id}`)
-    })
-  )
-)(Edit)

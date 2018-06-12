@@ -31,6 +31,7 @@ export const create = async (req, res) => {
   try {
     let photo = await Photo.create({
       name: req.body.name,
+      photo: req.body.photo,
       fieldId: req.body.fieldId
     })
     res.status(200).send(photo)

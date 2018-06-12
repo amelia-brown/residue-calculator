@@ -23,7 +23,8 @@ const GLOBALS = [
   'ImageData',
   'localStorage',
   'FileReader',
-  'Headers'
+  'Headers',
+  'Blob'
 ]
 
 module.exports = {

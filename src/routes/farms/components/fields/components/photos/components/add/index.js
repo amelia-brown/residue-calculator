@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
 
-import * as photos from 'modules/photos'
 import Content from 'components/content'
 import Title from 'components/title'
 import Button from 'components/button'
@@ -21,7 +19,9 @@ class Add extends Component {
     reader.onload = ((file) => {
       return (e) => {
         this.setState({
-          img: e.target.result
+          file: file,
+          img: e.target.result,
+          name: file.name
         })
       }
     })(file)
@@ -30,21 +30,45 @@ class Add extends Component {
   }
 
   handleConfirm () {
-    this.savePhoto(this.state.img)
+    this.getSignedRequest()
   }
 
-  savePhoto (file) {
-    let id = uuid()
-    let field = this.props.match.params.fieldId
+  async getSignedRequest () {
+    const {file} = this.state
+    try {
+      const resp = await fetch(
+        `/api/sign-s3?file-name=${file.name}&file-type=${file.type}`,
+        {
+          headers: {'content-type': 'application/json'}
+        }
+      )
+      const json = await resp.json()
+      console.log(resp, json)
+      this.savePhoto(json.signedRequest, json.url)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-    this.props.dispatch(photos.actions.create({
-      timestamp: Date.now(),
-      id,
-      file
-    },
-    field
-    ))
-    this.props.history.push(`${this.props.match.url}/${id}/edit`)
+  async savePhoto (signedRequest, url) {
+    try {
+      const response = await fetch(
+        signedRequest,
+        {
+          method: 'put',
+          body: this.state.image
+        }
+      )
+
+      const text = await response.text()
+
+      console.log('xx', text)
+
+      const tempUrl = encodeURIComponent(url)
+      this.props.history.push(`${this.props.match.url}/edit?url=${tempUrl}`)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render () {

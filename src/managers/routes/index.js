@@ -13,6 +13,7 @@ import * as userHandlers from './handlers/users'
 import * as farmHandlers from './handlers/farms'
 import * as fieldHandlers from './handlers/fields'
 import * as photoHandlers from './handlers/photos'
+import * as s3Handlers from './handlers/s3'
 
 const FacebookStrategy = PassportFacebook.Strategy
 
@@ -98,6 +99,8 @@ export default Object.assign(
       router.get('/api/photos/:id', photoHandlers.read)
       router.get('/api/photos', photoHandlers.readAll)
       router.post('/api/photos', photoHandlers.create)
+
+      router.get('/api/sign-s3', s3Handlers.create)
 
       router.get('/api/login', passport.authenticate('facebook'))
       router.get('/api/login/callback', passport.authenticate('facebook', {

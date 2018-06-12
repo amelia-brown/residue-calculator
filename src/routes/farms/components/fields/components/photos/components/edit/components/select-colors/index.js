@@ -70,7 +70,18 @@ export default class SelectColors extends Component {
       )
     }
 
-    image.src = this.props.photo.get('file')
+    image.src = this.props.url
+    // console.log(this.props.photo) // eslint-disable-line
+    // let file = this.props.photo.get('photo')
+    // let reader = new FileReader()
+    // reader.onload = file =>
+    //   e => {
+    //     image.src = e.target.result
+    //   }
+
+    // console.log(file) // eslint-disable-line
+
+    // reader.readAsDataURL(file.get('data'))
 
     window.addEventListener('mousedown', this.boundMouseDown)
   }
