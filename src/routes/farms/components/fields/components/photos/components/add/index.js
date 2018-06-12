@@ -29,7 +29,8 @@ class Add extends Component {
     reader.readAsDataURL(file)
   }
 
-  handleConfirm () {
+  handleConfirm = (e) => {
+    e.preventDefault()
     this.getSignedRequest()
   }
 
@@ -43,7 +44,6 @@ class Add extends Component {
         }
       )
       const json = await resp.json()
-      console.log(resp, json)
       this.savePhoto(json.signedRequest, json.url)
     } catch (error) {
       console.log(error)
@@ -56,15 +56,14 @@ class Add extends Component {
         signedRequest,
         {
           method: 'put',
-          body: this.state.image
+          headers: {'content-type': this.state.file.type},
+          body: this.state.file
         }
       )
 
-      const text = await response.text()
+      await response.text()
 
-      console.log('xx', text)
-
-      const tempUrl = encodeURIComponent(url)
+      const tempUrl = (url)
       this.props.history.push(`${this.props.match.url}/edit?url=${tempUrl}`)
     } catch (error) {
       console.log(error)
@@ -78,8 +77,7 @@ class Add extends Component {
           New Photo
         </Title>
 
-        <Button>
-
+        <form onSubmit={this.handleConfirm}>
           <label
             htmlFor='file-input'>
             Choose File
@@ -93,19 +91,19 @@ class Add extends Component {
             onChange={::this.onChange}
             type='file' />
 
-        </Button>
-        {
-          this.state.img &&
-            <div>
-              <img
-                className={styles.image}
-                src={this.state.img} />
-              <Button
-                onClick={::this.handleConfirm}>
-                Confirm
-              </Button>
-            </div>
-        }
+          {
+            this.state.img &&
+              <div>
+                <img
+                  className={styles.image}
+                  src={this.state.img} />
+                <Button
+                  type='submit'>
+                  Confirm
+                </Button>
+              </div>
+          }
+        </form>
 
       </Content>
     )
