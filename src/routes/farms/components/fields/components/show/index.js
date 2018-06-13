@@ -43,7 +43,7 @@ export default class Show extends Component {
           {field.get('name')}
         </Title>
 
-        <Card>
+        <Card className={styles.card}>
           <div className={styles.section}>
             {
               coverage

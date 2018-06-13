@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 
 import styles from './styles.sass'
 
@@ -6,7 +7,7 @@ const Card = ({
   className,
   children
 }) => (
-  <div className={`${styles.base} ${className}`}>
+  <div className={classnames(styles.base, className)}>
     {
       children
     }

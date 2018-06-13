@@ -6,7 +6,7 @@ import Copy from 'components/copy'
 import styles from './styles'
 
 export default ({farm}) => (
-  <Card>
+  <Card className={styles.card}>
     <div className={styles.section}>
       <Copy type='body'>
         Name: {farm.get('name')}
