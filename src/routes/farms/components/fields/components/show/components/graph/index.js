@@ -10,12 +10,9 @@ const R = (SIZE / 2) - (STROKE / 2)
 const DASH = 2 * Math.PI * R
 
 export default class Graph extends Component {
-  state = {
-    coverage: this.props.coverage
-  }
-
   render () {
-    if (!this.props.coverage) return null
+    const { coverage, totalPhotos } = this.props
+    if (!coverage) return null
     return (
       <div className={styles.base}>
         <svg width='224' height='224'>
@@ -35,15 +32,18 @@ export default class Graph extends Component {
             strokeLinecap='round'
             strokeWidth={STROKE}
             strokeDasharray={DASH}
-            strokeDashoffset={DASH * (1 - this.state.coverage)}
+            strokeDashoffset={DASH * (1 - coverage)}
             fill='none' />
         </svg>
         <div className={styles.text}>
           <span className={styles.report}>
-            {this.props.coverage * 100}%
+            {coverage * 100}%
           </span>
-          <Copy type='body'>
-            residue coverage
+          <Copy
+            className={styles.copy}
+            type='body'>
+            residue coverage <br />
+            calculated from {totalPhotos} photos
           </Copy>
         </div>
       </div>

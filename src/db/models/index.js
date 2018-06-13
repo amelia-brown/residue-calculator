@@ -40,7 +40,7 @@ export const photo = {
     allowNull: false
   },
   selection: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
+    type: Sequelize.JSON
   },
   coverage: Sequelize.INTEGER
 }

@@ -44,12 +44,12 @@ export default class Edit extends Component {
   async confirm (coverage) {
     let params = this.props.match.params
     let path = `/farms/${params.farmId}/fields/${params.fieldId}`
-    console.log(selection, coverage) // eslint-disable-line
     try {
       await create(`photos`, {}, {
         selection: this.state.colors,
         coverage,
-        photo: this.url
+        photo: this.url,
+        fieldId: params.fieldId
       })
       this.props.history.push(path)
     } catch (error) {

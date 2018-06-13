@@ -1,10 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import EmptyList from 'components/empty-list'
 import DisplayPhoto from 'components/display-photo'
-
-import styles from './styles'
 
 export default ({photos, path}) => {
   if (!photos || !photos.count()) {
@@ -12,11 +9,7 @@ export default ({photos, path}) => {
   }
   return photos.map(photo => {
     return (
-      <Link
-        to={`${path}/photos/${photo.get('id')}`}
-        className={styles.link}>
-        <DisplayPhoto photo={photo} />
-      </Link>
+      <DisplayPhoto photo={photo} />
     )
   })
 }

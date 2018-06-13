@@ -32,6 +32,8 @@ export const create = async (req, res) => {
     let photo = await Photo.create({
       name: req.body.name,
       photo: req.body.photo,
+      selection: JSON.stringify(req.body.selection),
+      coverage: req.body.coverage,
       fieldId: req.body.fieldId
     })
     res.status(200).send(photo)

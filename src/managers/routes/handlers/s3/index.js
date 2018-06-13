@@ -11,7 +11,7 @@ export const create = async (req, res) => {
     const fileName = req.query['file-name']
     const fileType = req.query['file-type']
     const s3Params = {
-      Bucket: process.env.AWS_BUCKET,
+      Bucket: process.env.S3_BUCKET,
       Key: fileName,
       Expires: 60,
       ContentType: fileType,
@@ -22,7 +22,7 @@ export const create = async (req, res) => {
 
     const returnData = {
       signedRequest: data,
-      url: `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${fileName}`
     }
     res.status(200).send(returnData)
   } catch (err) {

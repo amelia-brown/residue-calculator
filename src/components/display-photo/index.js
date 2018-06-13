@@ -15,12 +15,12 @@ export default class DisplayPhoto extends Component {
     width: 0
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     this.setState({
       width: window.innerWidth - MARGIN * 2
     })
 
-    const canvas = document.querySelector('#original')
+    const canvas = document.querySelector('#selection')
     const context = canvas.getContext('2d')
     let image = new Image()
     let that = this
@@ -46,7 +46,27 @@ export default class DisplayPhoto extends Component {
       that.setImage()
     }
 
-    image.src = this.props.photo.get('file')
+    const reader = new FileReader()
+    reader.onload = e => {
+      image.src = e.target.result
+    }
+
+    try {
+      const blob = await this.getImageBlob()
+      reader.readAsDataURL(blob)
+    } catch (err) {
+      console.log(err) // eslint-disable-line
+    }
+  }
+
+  async getImageBlob () {
+    try {
+      const resp = await fetch(this.props.photo.get('photo'))
+      const blob = await resp.blob()
+      return blob
+    } catch (error) {
+      console.log(error) // eslint-disable-line
+    }
   }
 
   toggleOverlay () {
@@ -58,16 +78,15 @@ export default class DisplayPhoto extends Component {
   setImage () {
     const canvas = document.querySelector('#selection')
     const context = canvas.getContext('2d')
-    const ogCanvas = document.querySelector('#original')
-    const ogContext = ogCanvas.getContext('2d')
 
-    let data = ogContext
+    let data = context
       .getImageData(0, 0, this.state.width, this.state.height)
       .data
 
     if (this.props.photo.has('selection')) {
+      const selection = JSON.parse(this.props.photo.get('selection'))
       let pixels = new ImageData(
-        findMatchingArea(data, this.props.photo.get('selection').toJS()),
+        findMatchingArea(data, selection),
         this.state.width,
         this.state.height
       )
@@ -86,9 +105,9 @@ export default class DisplayPhoto extends Component {
             width: `${this.state.width}px`
           }}
           className={styles.container}>
-          <canvas
-            id='original'
+          <img
             className={styles.canvas}
+            src={this.props.photo.get('photo')}
             height={this.state.height || 100}
             width={this.state.width} />
           <canvas

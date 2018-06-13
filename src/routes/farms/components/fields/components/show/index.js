@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
-import { Map } from 'immutable'
+import { List, Map } from 'immutable'
 
 import { read } from 'support/request'
 import Content from 'components/content'
@@ -18,7 +18,7 @@ export default class Show extends Component {
   state = {
     field: new Map()
   }
-  async componentWillMount () {
+  async componentDidMount () {
     try {
       const fieldId = this.props.match.params.fieldId
       const field = await read(`fields/${fieldId}`)
@@ -32,6 +32,11 @@ export default class Show extends Component {
   render () {
     const {match} = this.props
     const {field} = this.state
+    const totalPhotos = field.get('photos', new List()).size
+    const sumCoverage = field.get('photos', []).reduce((carry, photo) => {
+      return carry + photo.get('coverage', 0)
+    }, 0)
+    const coverage = (sumCoverage / totalPhotos) / 100
     return (
       <Content>
         <Title>
@@ -41,8 +46,8 @@ export default class Show extends Component {
         <Card>
           <div className={styles.section}>
             {
-              field.get('coverage')
-                ? <Graph coverage={field.get('coverage')} />
+              coverage
+                ? <Graph totalPhotos={totalPhotos} coverage={coverage} />
                 : <Copy type='subtitle'>No coverage data available</Copy>
             }
           </div>
