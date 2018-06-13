@@ -1,11 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
+import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
+import { Map } from 'immutable'
 
-import * as fields from 'modules/fields'
-import * as photos from 'modules/photos'
-import { getFieldPhotos } from 'support/selectors'
+import { read } from 'support/request'
 import Content from 'components/content'
 import Title from 'components/title'
 import Subtitle from 'components/subtitle'
@@ -17,47 +14,56 @@ import Graph from './components/graph'
 import PhotoList from './components/photos'
 import styles from './styles.sass'
 
-const Show = ({field, match}) => (
-  <Content>
-    <Title>
-      {field.get('name')}
-    </Title>
+export default class Show extends Component {
+  state = {
+    field: new Map()
+  }
+  async componentWillMount () {
+    try {
+      const fieldId = this.props.match.params.fieldId
+      const field = await read(`fields/${fieldId}`)
+      this.setState({
+        field
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  render () {
+    const {match} = this.props
+    const {field} = this.state
+    return (
+      <Content>
+        <Title>
+          {field.get('name')}
+        </Title>
 
-    <Card>
-      <div className={styles.section}>
-        {
-          field.get('coverage')
-            ? <Graph coverage={field.get('coverage')} />
-            : <Copy type='subtitle'>No coverage data available</Copy>
-        }
-      </div>
-    </Card>
+        <Card>
+          <div className={styles.section}>
+            {
+              field.get('coverage')
+                ? <Graph coverage={field.get('coverage')} />
+                : <Copy type='subtitle'>No coverage data available</Copy>
+            }
+          </div>
+        </Card>
 
-    <Subtitle type='subtitle'>
-      Photos
-    </Subtitle>
+        <Subtitle type='subtitle'>
+          Photos
+        </Subtitle>
 
-    <PhotoList
-      path={match.url}
-      photos={field.get('photos')} />
+        <PhotoList
+          path={match.url}
+          photos={field.get('photos')} />
 
-    <Link
-      className={styles.button}
-      to={`${match.url}/photos`}>
-      <Button>
-        Take New Photo
-      </Button>
-    </Link>
-  </Content>
-)
-
-export default connect(
-  createSelector(
-    fields.selectors.getFields,
-    photos.selectors.getPhotos,
-    (_, {match: {params: {fieldId}}}) => fieldId,
-    (fieldList, photoList, id) => ({
-      field: getFieldPhotos(id, fieldList, photoList)
-    })
-  )
-)(Show)
+        <Link
+          className={styles.button}
+          to={`${match.url}/photos`}>
+          <Button>
+            Take New Photo
+          </Button>
+        </Link>
+      </Content>
+    )
+  }
+}

@@ -33,13 +33,14 @@ export const field = {
 export const photo = {
   // Photo model
   name: {
+    type: Sequelize.STRING
+  },
+  photo: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  photo: {
-    type: Sequelize.BLOB,
-    allowNull: false
+  selection: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
-  coveragePhoto: Sequelize.BLOB,
   coverage: Sequelize.INTEGER
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Map } from 'immutable'
 import Uri from 'urijs'
 
-import { read, update } from 'support/request'
+import { create } from 'support/request'
 import SelectColors from './components/select-colors'
 import Selection from './components/selection'
 import styles from './styles'
@@ -15,23 +15,10 @@ export default class Edit extends Component {
     colors: []
   }
 
-  async componentDidMount () {
-    this.setState({
-      loading: true
-    })
-    try {
-      let id = this.props.match.params.photoId
-      const photo = await read(`photos/${id}`)
-      this.setState({
-        photo,
-        loading: false
-      })
-    } catch (error) {
-      this.setState({
-        loading: false,
-        error
-      })
-    }
+  constructor (props) {
+    super(props)
+
+    this.url = decodeURIComponent(new Uri().search(true).url)
   }
 
   addColor (color) {
@@ -57,10 +44,12 @@ export default class Edit extends Component {
   async confirm (coverage) {
     let params = this.props.match.params
     let path = `/farms/${params.farmId}/fields/${params.fieldId}`
+    console.log(selection, coverage) // eslint-disable-line
     try {
-      await update(`photos/${params.photoId}`, {}, {
-        selection: this.state.selection,
-        coverage
+      await create(`photos`, {}, {
+        selection: this.state.colors,
+        coverage,
+        photo: this.url
       })
       this.props.history.push(path)
     } catch (error) {
@@ -69,14 +58,13 @@ export default class Edit extends Component {
 
   render () {
     const photo = this.state.photo
-    let url = new Uri().search(true).url
     return (
       <div className={styles.container}>
         {
           photo &&
             <SelectColors
               photo={photo}
-              url={url}
+              url={this.url}
               confirm={::this.confirm}
               selectColor={::this.addColor}
               colors={this.state.colors} />

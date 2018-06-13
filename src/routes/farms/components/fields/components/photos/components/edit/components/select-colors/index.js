@@ -16,7 +16,7 @@ export default class SelectColors extends Component {
 
   boundMouseDown = ::this.handleMouseDown
 
-  componentDidMount () {
+  async componentDidMount () {
     this.setDimensions({
       width: window.innerWidth,
       height: window.innerHeight
@@ -70,20 +70,29 @@ export default class SelectColors extends Component {
       )
     }
 
-    image.src = this.props.url
-    // console.log(this.props.photo) // eslint-disable-line
-    // let file = this.props.photo.get('photo')
-    // let reader = new FileReader()
-    // reader.onload = file =>
-    //   e => {
-    //     image.src = e.target.result
-    //   }
+    const reader = new FileReader()
+    reader.onload = e => {
+      image.src = e.target.result
+    }
 
-    // console.log(file) // eslint-disable-line
-
-    // reader.readAsDataURL(file.get('data'))
+    try {
+      const blob = await this.getImageBlob()
+      reader.readAsDataURL(blob)
+    } catch (err) {
+      console.log(err) // eslint-disable-line
+    }
 
     window.addEventListener('mousedown', this.boundMouseDown)
+  }
+
+  async getImageBlob () {
+    try {
+      const resp = await fetch(this.props.url)
+      const blob = await resp.blob()
+      return blob
+    } catch (error) {
+      console.log(error) // eslint-disable-line
+    }
   }
 
   componentWillUnmount () {

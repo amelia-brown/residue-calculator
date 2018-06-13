@@ -63,7 +63,7 @@ class Add extends Component {
 
       await response.text()
 
-      const tempUrl = (url)
+      const tempUrl = encodeURIComponent(url)
       this.props.history.push(`${this.props.match.url}/edit?url=${tempUrl}`)
     } catch (error) {
       console.log(error)

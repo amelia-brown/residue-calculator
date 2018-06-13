@@ -2,7 +2,11 @@ import { Field } from 'db'
 
 export const read = async (req, res) => {
   try {
-    let field = await Field.findById(req.params.id)
+    let field = await Field.findById(req.params.id,
+      {
+        include: ['photos']
+      }
+    )
     res.status(200).send(field)
   } catch (err) {
     res.status(400).send(err)
