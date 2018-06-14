@@ -26,12 +26,7 @@ db
     console.error(`Unable to connect to ${DB}:`, err)
   })
 
-https.createServer(
-  {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
-  },
-  app)
+app
   .listen(process.env.PORT,
     error => {
       if (error) {
