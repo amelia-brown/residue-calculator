@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import classnames from 'classnames'
 
+import Copy from 'components/copy'
 import Content from 'components/content'
 import Title from 'components/title'
 import Button from 'components/button'
 
 import styles from './styles'
 
-class Add extends Component {
+export default class Add extends Component {
   state = {
-    img: false
+    img: false,
+    loading: false,
+    error: false
   }
 
   onChange (e) {
@@ -21,7 +24,8 @@ class Add extends Component {
         this.setState({
           file: file,
           img: e.target.result,
-          name: file.name
+          name: file.name,
+          type: file.type
         })
       }
     })(file)
@@ -31,14 +35,17 @@ class Add extends Component {
 
   handleConfirm = (e) => {
     e.preventDefault()
+    this.setState({
+      loading: true
+    })
     this.getSignedRequest()
   }
 
   async getSignedRequest () {
-    const {file} = this.state
+    const {name, type} = this.state
     try {
       const resp = await fetch(
-        `/api/sign-s3?file-name=${file.name}&file-type=${file.type}`,
+        `/api/sign-s3?file-name=${name}&file-type=${type}`,
         {
           headers: {'content-type': 'application/json'}
         }
@@ -46,7 +53,11 @@ class Add extends Component {
       const json = await resp.json()
       this.savePhoto(json.signedRequest, json.url)
     } catch (error) {
-      console.log(error)
+      this.setState({
+        loading: false,
+        error: true
+      })
+      console.log(error) // eslint-disable-line
     }
   }
 
@@ -56,7 +67,7 @@ class Add extends Component {
         signedRequest,
         {
           method: 'put',
-          headers: {'content-type': this.state.file.type},
+          headers: {'content-type': this.state.type},
           body: this.state.file
         }
       )
@@ -66,13 +77,20 @@ class Add extends Component {
       const tempUrl = encodeURIComponent(url)
       this.props.history.push(`${this.props.match.url}/edit?url=${tempUrl}`)
     } catch (error) {
-      console.log(error)
+      this.setState({
+        loading: false,
+        error: true
+      })
+      console.log(error) // eslint-disable-line
     }
   }
 
   render () {
     return (
-      <Content>
+      <Content
+        className={classnames({
+          [styles.loading]: this.state.loading
+        })}>
         <Title>
           New Photo
         </Title>
@@ -80,7 +98,11 @@ class Add extends Component {
         <form onSubmit={this.handleConfirm}>
           <label
             htmlFor='file-input'>
-            Choose File
+            <Button
+              type='button'
+              primary>
+              Choose File
+            </Button>
           </label>
 
           <input
@@ -104,12 +126,14 @@ class Add extends Component {
               </div>
           }
         </form>
+        {
+          this.state.error &&
+            <Copy type='body'>
+              There was an error uploading the photo, please try again.
+            </Copy>
+        }
 
       </Content>
     )
   }
 }
-
-export default connect(
-  () => ({})
-)(Add)

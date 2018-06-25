@@ -2,18 +2,24 @@ import React from 'react'
 
 import Content from 'components/content'
 import Title from 'components/title'
-import Button from 'components/button'
+import LinkButton from 'components/link-button'
+import TextButton from 'components/text-button'
 
-export default () => (
+export default ({handleAnonLogin}) => (
   <Content>
     <Title>
       Continue through Facebook
     </Title>
 
-    <a href='/api/login'>
-      <Button primary>
-        Sign in
-      </Button>
-    </a>
+    <LinkButton
+      to='/api/login'
+      primary
+    >
+      Sign in
+    </LinkButton>
+    <TextButton
+      onClick={handleAnonLogin}>
+      Continue without signing up
+    </TextButton>
   </Content>
 )

@@ -1,5 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import https from 'https'
+import fs from 'fs'
 
 import config from 'managers/config'
 import routes from 'managers/routes'
@@ -24,7 +26,12 @@ db
     console.error(`Unable to connect to ${DB}:`, err)
   })
 
-app
+https.createServer(
+  {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+  },
+  app)
   .listen(process.env.PORT,
     error => {
       if (error) {

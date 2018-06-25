@@ -2,12 +2,11 @@ import { Router } from 'express'
 import session from 'express-session'
 import passport from 'passport'
 import * as PassportFacebook from 'passport-facebook'
+import * as PassportAnonymous from 'passport-anonymous'
 
 import base from 'managers/base'
 import configureStore from 'support/configure-store'
 import render from 'support/render'
-
-import { User } from 'db'
 
 import * as userHandlers from './handlers/users'
 import * as farmHandlers from './handlers/farms'
@@ -15,24 +14,19 @@ import * as fieldHandlers from './handlers/fields'
 import * as photoHandlers from './handlers/photos'
 import * as s3Handlers from './handlers/s3'
 
+import { User } from 'db'
+
 const FacebookStrategy = PassportFacebook.Strategy
+const AnonymousStrategy = PassportAnonymous.Strategy
 
 // Init facebook login
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL
-}, async (accessToken, refreshToken, profile, done) => {
-  const user = await User.findOrCreate({
-    where: {
-      name: profile.displayName
-    },
-    defaults: {
-      name: profile.displayName
-    }
-  })
-  return done(null, user)
-}))
+}, userHandlers.createFromFacebook))
+
+passport.use(new AnonymousStrategy())
 
 export const handleRequest = (req, res) => {
   const context = {}
@@ -107,6 +101,10 @@ export default Object.assign(
         successRedirect: '/',
         failureRedirect: '/login?error=true'
       }))
+      router.get('/api/login/anonymous', passport.authenticate('anonymous', {
+        successRedirect: '/',
+        failureRedirect: '/login?error=true'
+      }), userHandlers.createAnonymous)
 
       router.get('*', handleRequest)
       app.use(router)

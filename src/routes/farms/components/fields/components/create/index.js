@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 
-import * as fields from 'modules/fields'
+import { create } from 'support/request'
 import Content from 'components/content'
 import Title from 'components/title'
 import FormField from 'components/form-field'
@@ -16,23 +15,29 @@ let validate = (value) => {
   return false
 }
 
-class Create extends Component {
+export default class Create extends Component {
   state = {
     values: {
       name: ''
     }
   }
 
-  handleSubmit (e) {
+  async handleSubmit (e) {
     e.preventDefault()
-    let farmId = this.props.match.params.farmId
+    try {
+      let farmId = this.props.match.params.farmId
 
-    this.props.dispatch(fields.actions.create({
-      name: this.state.values.name,
-      farmId
+      const resp = await create('fields', {},
+        {
+          name: this.state.values.name,
+          farmId
+        }
+      )
+      console.log(resp) // eslint-disable-line
+      this.props.history.push(`${resp.get('id')}`)
+    } catch (error) {
+      console.log(error) // eslint-disable-line
     }
-    ))
-    this.props.history.push('')
   }
 
   handleChange (type) {
@@ -68,7 +73,3 @@ class Create extends Component {
     )
   }
 }
-
-export default connect(
-  () => ({})
-)(Create)
