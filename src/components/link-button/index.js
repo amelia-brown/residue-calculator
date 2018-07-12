@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import classnames from 'classnames'
 
 import Button from 'components/button'
 
@@ -12,7 +13,7 @@ export default ({
   className
 }) => (
   <Link
-    className={styles.base}
+    className={classnames(styles.base, className)}
     to={to}>
     <Button
       primary>

@@ -24,27 +24,37 @@ export const createFromFacebook = async (
   profile,
   done
 ) => {
-  const user = await User.findOrCreate({
-    where: {
-      name: profile.displayName,
-      anonymous: false
-    },
-    defaults: {
-      name: profile.displayName,
-      anonymous: false
-    }
-  })
-  return done(null, user)
+  try {
+    const user = await User.findOrCreate({
+      where: {
+        name: profile.displayName,
+        anonymous: false
+      },
+      defaults: {
+        name: profile.displayName,
+        anonymous: false
+      }
+    })
+    return done(null, user)
+  } catch (err) {
+    console.log(err) // eslint-disable-line
+    return done(err)
+  }
 }
 
-export const createAnonymous = async (req, res) => {
+export const createAnonymous = async (
+  username,
+  password,
+  done
+) => {
   try {
     let user = await User.create({
       name: '',
       anonymous: true
     })
-    res.status(200).send(user)
+    return done(null, user)
   } catch (err) {
-    res.status(400).send(err)
+    console.log(err) // eslint-disable-line
+    return done(err)
   }
 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import * as requests from 'support/request'
+import { withRouter } from 'react-router-dom'
 
 import LoginPage from './components/login-page'
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     error: false,
     loading: false
@@ -11,10 +12,9 @@ export default class Login extends Component {
 
   async handleAnonLogin () {
     try {
-      const resp = await requests.read('login/anonymous')
-      console.log(resp) // eslint-disable-line
+      await requests.create('login/anonymous', {}, {username: 'fuck', password: 'this'})
+      this.props.history.push('/')
     } catch (error) {
-      console.log(error) // eslint-disable-line
       this.setState({
         error: true
       })
@@ -24,7 +24,9 @@ export default class Login extends Component {
   render () {
     return (
       <LoginPage
-        handleAnonLogin={this.handleAnonLogin} />
+        handleAnonLogin={::this.handleAnonLogin} />
     )
   }
 }
+
+export default withRouter(Login)

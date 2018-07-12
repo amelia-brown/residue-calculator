@@ -2,7 +2,7 @@ import { Router } from 'express'
 import session from 'express-session'
 import passport from 'passport'
 import * as PassportFacebook from 'passport-facebook'
-import * as PassportAnonymous from 'passport-anonymous'
+import * as PassportLocal from 'passport-local'
 
 import base from 'managers/base'
 import configureStore from 'support/configure-store'
@@ -17,16 +17,16 @@ import * as s3Handlers from './handlers/s3'
 import { User } from 'db'
 
 const FacebookStrategy = PassportFacebook.Strategy
-const AnonymousStrategy = PassportAnonymous.Strategy
+const LocalStrategy = PassportLocal.Strategy
+
+passport.use('local', new LocalStrategy(userHandlers.createAnonymous))
 
 // Init facebook login
-passport.use(new FacebookStrategy({
+passport.use('facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL
 }, userHandlers.createFromFacebook))
-
-passport.use(new AnonymousStrategy())
 
 export const handleRequest = (req, res) => {
   const context = {}
@@ -61,7 +61,13 @@ export default Object.assign(
         return done(null, user)
       })
 
-      passport.deserializeUser(async ([{id}], done) => {
+      passport.deserializeUser(async (resp, done) => {
+        let id
+        if (Array.isArray(resp)) {
+          id = resp[0].id
+        } else {
+          id = resp.id
+        }
         try {
           const user = await User.findById(id)
           return done(null, user)
@@ -73,7 +79,7 @@ export default Object.assign(
       const router = Router()
 
       router.use((err, req, res, next) => {
-        console.error(err)
+        console.error(err) // eslint-disable-line
 
         return res
           .status(500)
@@ -99,12 +105,15 @@ export default Object.assign(
       router.get('/api/login', passport.authenticate('facebook'))
       router.get('/api/login/callback', passport.authenticate('facebook', {
         successRedirect: '/',
-        failureRedirect: '/login?error=true'
+        failureRedirect: '/login'
       }))
-      router.get('/api/login/anonymous', passport.authenticate('anonymous', {
-        successRedirect: '/',
-        failureRedirect: '/login?error=true'
-      }), userHandlers.createAnonymous)
+      router.post(
+        '/api/login/anonymous',
+        passport.authenticate('local', {
+          successRedirect: '/',
+          failureRedirect: '/login'
+        })
+      )
 
       router.get('*', handleRequest)
       app.use(router)

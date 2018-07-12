@@ -24,14 +24,6 @@ const Copy = ({
   ELEMENTS[type],
   {
     children,
-    // className: classNames(
-    //  styles.base,
-    //  styles[type],
-    //  {
-    //    [styles.dark]: dark
-    //  },
-    //  className
-    // )
     className: classnames(
       styles.base,
       styles[type],
@@ -42,13 +34,5 @@ const Copy = ({
     )
   }
 )
-
-// Copy.defaultProps = {
-//  type: 'body'
-// }
-
-// Copy.propTypes = {
-//   type: PropTypes.oneOf(Object.keys(ELEMENTS))
-// }
 
 export default Copy
